@@ -1,15 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import './index.css';
+import './index.scss';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from '@auth0/auth0-react';
+import { ConfigProvider } from './contexts/ConfigContext';
 
 const domain = "dev-7enfb3ecm1kzsr0z.us.auth0.com"
 const clientId = "9TBAmZvhPLhOpqR5kRC0nWxcHucJEpaf"
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+const container = document.getElementById('root');
+const root = createRoot(container);
 
 root.render(
 <Auth0Provider
@@ -18,9 +23,9 @@ root.render(
     authorizationParams={{
       redirect_uri: window.location.origin
     }}>
-      <BrowserRouter>
-          <App />
-      </BrowserRouter>
+  <ConfigProvider>
+    <App />
+  </ConfigProvider>
   </Auth0Provider>,
 );
 
