@@ -1,6 +1,8 @@
 from rest_framework import generics
 from .models import Incident
 from .serializers import IncidentSerializer
+from django.views.generic import TemplateView
+
 
 class IncidentListCreateView(generics.ListCreateAPIView):
     queryset = Incident.objects.all()
@@ -11,6 +13,13 @@ class IncidentDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = IncidentSerializer
 
 
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+
+from django.shortcuts import render, get_object_or_404
+from incidents.models import Playbook
 
 
 
