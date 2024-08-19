@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useRef } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import Navigation from './Navigation';
 import NavBar from './NavBar';
@@ -92,10 +93,21 @@ const AdminLayout = ({ children }) => {
     );
   }
 
+  const { logout } = useAuth0();
+
   return (
     <React.Fragment>
       {common}
       {mainContainer}
+            {/* Add logout button at the bottom */}
+            <div className="sidebar-logout">
+        <button
+          className="btn btn-primary"
+          onClick={() => logout({ returnTo: window.location.origin })}
+        >
+          Log Out
+        </button>
+      </div>
     </React.Fragment>
   );
 };
