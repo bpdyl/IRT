@@ -2,7 +2,14 @@ from rest_framework import generics
 from .models import Incident
 from .serializers import IncidentSerializer
 from django.views.generic import TemplateView
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
+from .models import Playbook
+from django.contrib.auth.models import User
+from .serializers import PlaybookSerializer
+from rest_framework.permissions import AllowAny
 
 class IncidentListCreateView(generics.ListCreateAPIView):
     queryset = Incident.objects.all()
@@ -18,10 +25,46 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 
 
-from django.shortcuts import render, get_object_or_404
-from incidents.models import Playbook
+class PlaybookListView(APIView):
+    def get(self, request):
+        playbooks = Playbook.objects.all()
+        serializer = PlaybookSerializer(playbooks, many=True)
+        return Response(serializer.data)
 
+class PlaybookDetailView(APIView):
+    def get(self, request, pk):
+        playbook = get_object_or_404(Playbook, pk=pk)
+        serializer = PlaybookSerializer(playbook)
+        return Response(serializer.data)
 
+    def post(self, request, pk):
+        playbook = get_object_or_404(Playbook, pk=pk)
+        content = request.data.get('content', '')
+        print(f'New content : {content}')
+        if content:
+            playbook.content = content
+            playbook.save()
+            return Response({"message": "Playbook updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"error": "Content is required"}, status=status.HTTP_400_BAD_REQUEST)
+    
+class CopyPlaybookView(APIView):
+    permission_classes = [AllowAny]
+    def post(self, request, pk):
+        playbook = get_object_or_404(Playbook, pk=pk)
+        
+        # Create a new Playbook instance by copying the original one
+        created_by = request.user if request.user.is_authenticated else User.objects.first()
+        new_playbook = Playbook.objects.create(
+            title=f"{playbook.title} (Copy)",
+            description=playbook.description,
+            incident_type = playbook.incident_type,
+            content=playbook.content,
+            created_by=created_by,  # assuming the logged-in user is the owner of the copy
+            is_editable=True,  # Make the copied playbook editable
+        )
+
+        serializer = PlaybookSerializer(new_playbook)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # from rest_framework.response import Response
 # from rest_framework.decorators import api_view
