@@ -68,6 +68,7 @@ const routes = [
         path: '/playbooks/:playbookId',
         element: lazy(() => import('./playbooks/playbookDetail'))
       },
+      
     ]
   }
 ];
