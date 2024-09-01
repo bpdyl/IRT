@@ -1,31 +1,27 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import './index.scss';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Auth0Provider } from '@auth0/auth0-react';
 import { ConfigProvider } from './contexts/ConfigContext';
-
-const domain = "dev-7enfb3ecm1kzsr0z.us.auth0.com"
-const clientId = "9TBAmZvhPLhOpqR5kRC0nWxcHucJEpaf"
+import { Auth0ProviderWithNavigate } from './store/Auth0ProviderWithNavigate';
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 const container = document.getElementById('root');
 const root = createRoot(container);
 
+
 root.render(
-<Auth0Provider
-    domain={domain}
-    clientId={clientId}
-    authorizationParams={{
-      redirect_uri: window.location.origin
-    }}>
-  <ConfigProvider>
-    <App />
-  </ConfigProvider>
-  </Auth0Provider>,
+  <BrowserRouter>
+    <Auth0ProviderWithNavigate>
+      <ConfigProvider>
+        <App />
+      </ConfigProvider>
+    </Auth0ProviderWithNavigate>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

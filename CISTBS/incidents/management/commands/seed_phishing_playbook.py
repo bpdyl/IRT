@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from incidents.models import Playbook,User
+from incidents.models import Playbook,CustomUser
 from incidents.models import IncidentType
 class Command(BaseCommand):
     help = 'Load the phishing playbook data into the database'
@@ -9,7 +9,8 @@ class Command(BaseCommand):
         Playbook.objects.all().delete()
 
         # Step 1: Create IncidentType
-        reporter = User.objects.get(username='bibek')  # Replace with actual username
+        #get the first user
+        reporter = CustomUser.objects.first() 
         phishing_type, created = IncidentType.objects.get_or_create(
             name="Phishing",
             defaults={'description': "Incidents related to phishing attacks"}

@@ -7,7 +7,6 @@ import NavSearch from './NavSearch';
 
 const NavLeft = () => {
   const windowSize = useWindowSize();
-
   let navItemClass = ['nav-item'];
   if (windowSize.width <= 575) {
     navItemClass = [...navItemClass, 'd-none'];
@@ -24,12 +23,12 @@ const NavLeft = () => {
             <ul>
               <Dropdown.Menu>
                 <li>
-                  <Link to="#" className="dropdown-item">
-                    Action
+                  <Link to="#" className="dropdown-item" >
+                    Some Action
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="dropdown-item">
+                  <Link to="#" className="dropdown-item" >
                     Another action
                   </Link>
                 </li>

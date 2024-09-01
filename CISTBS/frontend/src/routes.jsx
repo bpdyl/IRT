@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
 import AdminLayout from './layouts/AdminLayout';
 
-import { BASE_URL } from './config/constant';
 
 export const renderRoutes = (routes = []) => (
   <Suspense fallback={<Loader />}>
@@ -51,6 +50,10 @@ const routes = [
     layout: AdminLayout,
     routes: [
       {
+        path: '/callback?',
+        element: lazy(() => import('./store/Callback'))
+      },
+      {
         exact: 'true',
         path: '/app/dashboard/',
         element: lazy(() => import('./views/dashboard'))
@@ -65,11 +68,7 @@ const routes = [
         path: '/playbooks/:playbookId',
         element: lazy(() => import('./playbooks/playbookDetail'))
       },
-      {
-        path: '*',
-        exact: 'true',
-        element: () => <Navigate to={BASE_URL} />
-      }
+      
     ]
   }
 ];

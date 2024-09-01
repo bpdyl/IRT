@@ -9,18 +9,21 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os 
+import dotenv
+from datetime import timedelta
 from pathlib import Path
+from common.utils.utils import get_env_var
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+dotenv.load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-qj7_^@zc)a+kas29v*k25zaq9rnfylta4ul3!q+whh1a0td014"
+SECRET_KEY = get_env_var('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,7 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "incidents",
-    "corsheaders"
+    "corsheaders",
+    "rest_framework_simplejwt"
 ]
 
 MIDDLEWARE = [
@@ -53,22 +57,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-}
-
-CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000',  # The default port for create-react-app
-]
-
-
-CORS_ALLOW_HEADERS = '*'
-
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
 
 ROOT_URLCONF = "backend.urls"
 
@@ -143,3 +131,56 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'incidents.CustomUser'
+
+# Security
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000',  # The default port for create-react-app
+]
+
+
+CORS_ALLOW_HEADERS = '*'
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8000","http://localhost:3000"]
+
+CLIENT_ORIGIN_URL = get_env_var('CLIENT_ORIGIN_URL')
+
+CORS_ALLOWED_ORIGINS = [CLIENT_ORIGIN_URL]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = 31536000
+
+
+AUTH0_DOMAIN = get_env_var('AUTH0_DOMAIN')
+AUTH0_AUDIENCE = get_env_var('AUTH0_AUDIENCE')
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=5),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'email',
+    'USER_ID_CLAIM': 'email',
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule", 
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    "JTI_CLAIM": "jti",  
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",  
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),  
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1), 
+}

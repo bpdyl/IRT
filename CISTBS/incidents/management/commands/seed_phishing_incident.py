@@ -1,14 +1,15 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from incidents.models import Playbook
-from incidents.models import IncidentType, Incident, Investigation, Remediation, Communication, Recovery, Reference, User
+from incidents.models import IncidentType, Incident, Investigation, Remediation, Communication, Recovery, Reference, CustomUser
 
 class Command(BaseCommand):
     help = 'Populates the database with phishing playbook data and an example incident'
 
     def handle(self, *args, **kwargs):
         # Assume the user creating the incident
-        reporter = User.objects.get(username='bibek')  # Replace with actual username
+        #get the first user
+        reporter = CustomUser.objects.first()  
 
         # Step 1: Create IncidentType
         phishing_type, created = IncidentType.objects.get_or_create(
