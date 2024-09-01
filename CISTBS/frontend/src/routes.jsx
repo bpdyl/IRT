@@ -68,6 +68,16 @@ const routes = [
         path: '/playbooks/:playbookId',
         element: lazy(() => import('./playbooks/playbookDetail'))
       },
+      {
+        exact: 'true',
+        path: '/Incidents',
+        element: lazy(() => import('./incidents/incidents'))
+      },
+      {
+        exact: 'true',
+        path: '/IRS',
+        element: lazy(() => import('./IRS/IRS'))
+      },
       
     ]
   }
