@@ -1,13 +1,4 @@
-import configJson from '../auth_config.json'
-export const BASE_URL = '/app/dashboard/';
-export const BASE_TITLE = ' | Incident Response Tool';
-export const REACT_APP_API_SERVER_URL = 'http://localhost:8000';
-
-export const CONFIG = {
-  layout: 'vertical',
-  headerFixedLayout: true
-};
-
+import configJson from "./auth_config.json";
 
 export function getConfig() {
   // Configure the audience here. By default, it will take whatever is in the config

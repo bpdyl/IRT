@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import NavLeft from './NavLeft';
+import NavRight from './NavRight';
+
 
 import { ConfigContext } from '../../../contexts/ConfigContext';
 import * as actionType from '../../../store/actions';
@@ -52,6 +54,7 @@ const NavBar = () => {
       </div>
       <div style={{ justifyContent: 'space-between' }} className={collapseClass.join(' ')}>
         <NavLeft />
+        <NavRight />
       </div>
     </React.Fragment>
   );

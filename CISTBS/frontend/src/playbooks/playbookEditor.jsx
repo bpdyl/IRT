@@ -1,57 +1,11 @@
-// import React, { useState, useEffect } from 'react';
-// import ReactQuill from 'react-quill'; // Rich Text Editor
-// import 'react-quill/dist/quill.snow.css'; // Import styles
-// import axios from 'axios';
-
-// const PlaybookEditor = ({ playbookId }) => {
-//     const [playbookContent, setPlaybookContent] = useState('');
-//     const [editing, setEditing] = useState(false);
-
-//     useEffect(() => {
-//         // Fetch playbook content from the backend
-//         axios.get(`/api/playbooks/${playbookId}/`)
-//             .then(response => {
-//                 setPlaybookContent(response.data.content);
-//             })
-//             .catch(error => {
-//                 console.error("Error fetching playbook:", error);
-//             });
-//     }, [playbookId]);
-
-//     const handleSave = () => {
-//         axios.post(`/api/playbooks/${playbookId}/update/`, { content: playbookContent })
-//             .then(response => {
-//                 setEditing(false);
-//                 alert("Playbook saved successfully!");
-//             })
-//             .catch(error => {
-//                 console.error("Error saving playbook:", error);
-//             });
-//     };
-
-//     return (
-//         <div>
-//             {editing ? (
-//                 <ReactQuill value={playbookContent} onChange={setPlaybookContent} />
-//             ) : (
-//                 <div dangerouslySetInnerHTML={{ __html: playbookContent }} />
-//             )}
-//             <button onClick={() => setEditing(!editing)}>
-//                 {editing ? 'Cancel' : 'Edit'}
-//             </button>
-//             {editing && <button onClick={handleSave}>Save</button>}
-//         </div>
-//     );
-// };
-
-// export default PlaybookEditor;
 import React, { useState, useEffect } from 'react';
+import { useAuthFetch } from '../hooks/useAuthFetch'; 
+import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill'; // Rich Text Editor
 import 'react-quill/dist/quill.snow.css'; // Import styles
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import axios from 'axios';
-
+import { REACT_APP_API_SERVER_URL } from '../config/constant';
 // Import the custom SCSS file
 import './playbook.scss';
 
@@ -60,41 +14,50 @@ const PlaybookEditor = ({ playbookId }) => {
     const [playbookTitle, setPlaybookTitle] = useState('');
     const [isEditable, setIsEditable] = useState(false);
     const [editing, setEditing] = useState(false);
+    const authFetch = useAuthFetch(); // Use the custom hook
+    const navigate = useNavigate();
+
 
     useEffect(() => {
-        // Fetch playbook content from the backend
-        axios.get(`/api/playbooks/${playbookId}/`)
-            .then(response => {
-                setPlaybookContent(response.data.content);
-                setPlaybookTitle(response.data.title);
-                console.log('Playbook editable: ', response.data.is_editable);
-                setIsEditable(response.data.is_editable);
-            })
-            .catch(error => {
+        // Fetch playbook content from the backend using authFetch
+        const fetchPlaybook = async () => {
+            try {
+                const data = await authFetch(`${REACT_APP_API_SERVER_URL}/api/playbooks/${playbookId}/`);
+                setPlaybookContent(data.content);
+                setPlaybookTitle(data.title);
+                setIsEditable(data.is_editable);
+
+            } catch (error) {
                 console.error("Error fetching playbook:", error);
-            });
+            }
+        };
+
+        fetchPlaybook();
     }, [playbookId]);
 
-    const handleSave = () => {
-        axios.post(`/api/playbooks/${playbookId}/update/`, { content: playbookContent })
-            .then(response => {
-                setEditing(false);
-                alert("Playbook saved successfully!");
-            })
-            .catch(error => {
-                console.error("Error saving playbook:", error);
+    const handleSave = async () => {
+        try {
+            await authFetch(`/api/playbooks/${playbookId}/update/`, {
+                method: 'POST',
+                data: { content: playbookContent },
             });
+            setEditing(false);
+            alert("Playbook saved successfully!");
+        } catch (error) {
+            console.error("Error saving playbook:", error);
+        }
     };
 
-    const handleMakeCopyAndEdit = () => {
-        axios.post(`/api/playbooks/${playbookId}/copy/`)
-            .then(response => {
-                alert("Playbook copy created successfully!");
-                window.location.reload(); // Reload the page to load the copied playbook
-            })
-            .catch(error => {
-                console.error("Error creating playbook copy:", error);
+    const handleMakeCopyAndEdit = async () => {
+        try {
+            const newPlaybook = await authFetch(`/api/playbooks/${playbookId}/copy/`, {
+                method: 'POST',
             });
+            alert("Playbook copy created successfully!");
+            navigate(`/playbooks/${newPlaybook.id}`)
+        } catch (error) {
+            console.error("Error creating playbook copy:", error);
+        }
     };
 
     return (
@@ -124,4 +87,3 @@ const PlaybookEditor = ({ playbookId }) => {
 };
 
 export default PlaybookEditor;
-

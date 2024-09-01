@@ -1,7 +1,11 @@
 from django.urls import path, include
-from .views import IncidentListCreateView, IncidentDetailView,PlaybookListView,PlaybookDetailView,CopyPlaybookView
+from rest_framework_simplejwt.views import TokenRefreshView
+from .views import IncidentListCreateView, IncidentDetailView,PlaybookListView,PlaybookDetailView,CopyPlaybookView, SyncUserView,LoginView
 
 urlpatterns = [
+    path('login',LoginView.as_view(), name='login'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('user/sync', SyncUserView.as_view(), name='sync-user'),
     path('incidents/', IncidentListCreateView.as_view(), name='incident-list-create'),
     path('incidents/<int:pk>/', IncidentDetailView.as_view(), name='incident-detail'),
     path('playbooks/', PlaybookListView.as_view(), name='playbook_list'),
