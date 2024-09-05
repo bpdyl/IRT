@@ -78,7 +78,11 @@ const routes = [
         path: '/IRS',
         element: lazy(() => import('./IRS/IRS'))
       },
-      
+      {
+        exact: 'true',
+        path: '/incident-detail',
+        element: lazy(() => import('./views/incidents/IncidentDetailPage'))
+      },
     ]
   }
 ];
