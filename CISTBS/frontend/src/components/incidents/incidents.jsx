@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NIF from '../components/NewIncidentForm/NIF';
+import IncidentCreateForm from './IncidentCreateForm'
 import './incidents.css';
 
 const Incidents = () => {
@@ -68,13 +68,13 @@ const Incidents = () => {
           )}
         </div>
       ))}
-      console.log(isFormOpen)
+
       {/* Conditionally render the New Incident Form in a modal */}
       {isFormOpen && (
         <div className="modal">
           <div className="modal-content">
             <span className="close-button" onClick={handleCloseForm}>&times;</span>
-            <NIF onClose={handleCloseForm} />
+            <IncidentCreateForm onClose={handleCloseForm} />
           </div>
         </div>
       )}

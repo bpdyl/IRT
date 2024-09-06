@@ -29,6 +29,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.8.0",
     "remark-gfm": "^4.0.0",
     "sass": "^1.77.8",
     "styled-components": "^6.1.12",
