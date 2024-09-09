@@ -1,0 +1,64 @@
+.modal-info {
+    background-color: #f4f0fe;
+    padding: 12px;
+    border-radius: 6px;
+    color: #7748F6;
+    margin-bottom: 20px;
+  }
+  
+  .slack-info {
+    font-size: 14px;
+    color: #787476;
+  }
+  
+  .modal-body .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .modal-body label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  
+  .modal-body .form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+  }
+  
+  .modal-body .form-input:focus {
+    border-color: #7748F6;
+    outline: none;
+  }
+  
+  .required {
+    color: red;
+  }
+  
+  .cancel-button, .add-button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .cancel-button {
+    background-color: transparent;
+    color: #787476;
+    border: 1px solid #E5E7EB;
+  }
+  
+  .add-button {
+    background-color: #7748F6;
+    color: white;
+    border: none;
+  }
+  
+  .add-button:hover {
+    background-color: #6538D1;
+  }
+  

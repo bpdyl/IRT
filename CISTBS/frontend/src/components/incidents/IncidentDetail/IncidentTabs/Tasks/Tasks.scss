@@ -1,0 +1,86 @@
+.tasks-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sort-by {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #787476;
+}
+
+.sort-by label {
+  margin-right: 8px;
+}
+
+.sort-dropdown {
+  padding: 8px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.new-task-button {
+  background-color: #7748F6;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.new-task-button:hover {
+  background-color: #6538D1;
+}
+
+/* Placeholder Styles for No Tasks */
+.no-tasks-placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 300px; /* Adjust height as necessary */
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  background-color: #FAFAFA;
+  padding: 20px;
+  text-align: center;
+}
+
+.placeholder-image {
+  width: 150px; /* Adjust image size */
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.no-tasks-message {
+  font-size: 16px;
+  color: #787476;
+  margin-bottom: 20px;
+}
+
+.create-task-link {
+  font-size: 16px;
+  color: #7748F6;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.3s;
+}
+
+.create-task-link:hover {
+  color: #6538D1;
+}

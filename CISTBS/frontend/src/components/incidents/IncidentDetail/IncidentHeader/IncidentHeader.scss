@@ -1,0 +1,885 @@
+// // IncidentHeader.scss
+// .header-component {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     border-bottom: 1px solid #ddd;
+//     padding: 20px 0;
+// }
+
+// .header-left {
+//     h1 {
+//         font-size: 24px;
+//         margin: 0;
+//         color: #333;
+//     }
+
+//     p {
+//         color: #666;
+//         margin-top: 8px;
+//     }
+// }
+
+// .style-5 {
+//     align-items: center;
+//     display: flex;
+//     margin-bottom: 12px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-6 {
+//     color: rgb(199, 60, 64);
+//     font-size: 12px;
+//     line-height: 15.6px;
+//     padding-top: 4px;
+//     padding-bottom: 4px;
+//     padding-left: 8px;
+//     padding-right: 8px;
+//     background-color: rgb(250, 230, 232);
+//     border-color: rgb(244, 207, 209);
+//     border-width: 0.833333px;
+//     border-radius: 9999px;
+//     align-items: center;
+//     width: fit-content;
+//     display: flex;
+//     margin-right: 8px;
+//     box-sizing: border-box;
+//     border-style: solid;
+// }
+
+// .style-7 {
+//     height: 11.9922px;
+//     width: auto;
+//     display: flex;
+//     pointer-events: all;
+//     fill: rgb(199, 60, 64);
+//     flex-shrink: 0;
+//     margin-right: 4px;
+//     vertical-align: middle;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-8 {
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-9 {
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+//     max-width: 240px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-10 {
+//     color: rgb(30, 26, 51);
+//     font-weight: 500;
+//     font-size: 26px;
+//     line-height: 31.2px;
+//     justify-content: flex-start;
+//     width: 100%;
+//     display: flex;
+//     margin-top: 4px;
+//     margin-bottom: 14px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-11 {
+//     padding-top: 4px;
+//     padding-bottom: 4px;
+//     padding-left: 6px;
+//     padding-right: 6px;
+//     border-radius: 4px;
+//     word-break: break-all;
+//     gap: 8px;
+//     cursor: pointer;
+//     display: flex;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-12 {
+//     align-items: center;
+//     width: 50%;
+//     display: none;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-13 {
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 26px;
+//     font-weight: 500;
+//     line-height: 31.2px;
+//     letter-spacing: normal;
+//     color: rgb(30, 26, 51);
+//     margin: 0px;
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-14 {
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 26px;
+//     font-weight: 500;
+//     line-height: 31.2px;
+//     letter-spacing: normal;
+//     color: rgb(30, 26, 51);
+//     margin: 0px;
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-15 {
+//     position: relative;
+//     width: 100%;
+//     border-radius: 6px;
+//     border-width: 0.833333px;
+//     border-color: rgb(230, 228, 225);
+//     background-color: rgb(255, 255, 255);
+//     padding: 10px 10px 10px 12px;
+//     text-align: left;
+//     font-size: 14px;
+//     line-height: 19.6px;
+//     color: rgb(30, 26, 51);
+//     height: 40px;
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-weight: 500;
+//     letter-spacing: normal;
+//     margin: 0px;
+//     box-sizing: border-box;
+//     border-style: solid;
+// }
+
+// .style-16 {
+//     justify-content: flex-end;
+//     display: flex;
+//     margin-left: 8px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-17 {
+//     font-size: 14px;
+//     line-height: 19.6px;
+//     border-color: rgb(230, 228, 225);
+//     border-width: 0.833333px;
+//     border-radius: 6px;
+//     cursor: pointer;
+//     width: 2.5rem;
+//     height: 40px;
+//     appearance: button;
+//     background-color: rgba(0, 0, 0, 0);
+//     background-image: none;
+//     text-transform: none;
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-weight: 500;
+//     letter-spacing: normal;
+//     color: rgb(30, 26, 51);
+//     margin: 0px;
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-style: solid;
+// }
+
+// .style-18 {
+//     height: 18px;
+//     width: auto;
+//     display: inline-flex;
+//     pointer-events: all;
+//     color: rgb(255, 255, 255);
+//     fill: rgb(30, 26, 51);
+//     vertical-align: middle;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-19 {
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-20 {
+//     margin-right: 0px;
+//     margin-left: 8px;
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 26px;
+//     font-weight: 500;
+//     line-height: 31.2px;
+//     letter-spacing: normal;
+//     color: rgb(30, 26, 51);
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-21 {
+//     font-size: 14px;
+//     line-height: 19.6px;
+//     border-color: rgb(230, 228, 225);
+//     border-width: 0.833333px;
+//     border-radius: 6px;
+//     margin-right: 0px;
+//     margin-left: 8px;
+//     cursor: pointer;
+//     width: 2.5rem;
+//     height: 40px;
+//     appearance: button;
+//     background-color: rgba(0, 0, 0, 0);
+//     background-image: none;
+//     text-transform: none;
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-weight: 500;
+//     letter-spacing: normal;
+//     color: rgb(30, 26, 51);
+//     margin: 0px 0px 0px 8px;
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-style: solid;
+// }
+
+// .style-22 {
+//     height: 18px;
+//     width: auto;
+//     display: inline-flex;
+//     pointer-events: all;
+//     color: rgb(255, 255, 255);
+//     fill: rgb(30, 26, 51);
+//     vertical-align: middle;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-23 {
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-24 {
+//     margin-right: 0px;
+//     margin-left: 8px;
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 26px;
+//     font-weight: 500;
+//     line-height: 31.2px;
+//     letter-spacing: normal;
+//     color: rgb(30, 26, 51);
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-25 {
+//     margin-left: 4px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-26 {
+//     color: rgb(120, 118, 116);
+//     font-size: 12px;
+//     line-height: 15.6px;
+//     margin-left: 8px;
+//     margin-right: 8px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-27 {
+//     color: rgb(120, 118, 116);
+//     font-size: 12px;
+//     line-height: 15.6px;
+//     padding-top: 4px;
+//     padding-bottom: 4px;
+//     padding-left: 8px;
+//     padding-right: 8px;
+//     background-color: rgb(252, 251, 250);
+//     border-color: rgb(230, 228, 225);
+//     border-width: 0.833333px;
+//     border-radius: 9999px;
+//     align-items: center;
+//     width: fit-content;
+//     display: inline-flex;
+//     box-sizing: border-box;
+//     border-style: solid;
+// }
+
+// .style-28 {
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+//     max-width: 240px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-29 {
+//     color: rgb(120, 118, 116);
+//     margin-bottom: 14px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     line-height: 21px;
+//     overflow-wrap: break-word;
+//     word-break: break-word;
+// }
+
+// .style-30 {
+//     padding-top: 8px;
+//     padding-bottom: 8px;
+//     padding-left: 6px;
+//     padding-right: 6px;
+//     border-radius: 4px;
+//     align-items: center;
+//     cursor: pointer;
+//     max-width: 100%;
+//     width: fit-content;
+//     display: flex;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+// }
+
+// .style-31 {
+//     max-width: 100%;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-32 {
+//     overflow: hidden;
+//     display: -webkit-box;
+//     -webkit-box-orient: vertical;
+//     -webkit-line-clamp: 5;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-33 {
+//     margin: 0px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     padding: 0px;
+// }
+
+// .style-34 {
+//     align-items: center;
+//     display: none;
+//     margin-top: 16px;
+//     margin-bottom: 16px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 16px 0px;
+//     padding: 0px;
+// }
+
+// .style-35 {
+//     border-top-width: 0.833333px;
+//     flex-grow: 1;
+//     height: 0px;
+//     box-sizing: border-box;
+//     border-width: 0.833333px 0px 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-36 {
+//     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+//     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+//     transition-duration: 0.15s;
+//     padding-top: 4px;
+//     padding-bottom: 4px;
+//     padding-left: 16px;
+//     padding-right: 16px;
+//     border-radius: 4px;
+//     align-items: center;
+//     cursor: pointer;
+//     display: flex;
+//     margin-left: 4px;
+//     margin-right: 4px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px 4px;
+//     padding: 4px 16px;
+// }
+
+// .style-37 {
+//     height: 12px;
+//     width: auto;
+//     display: flex;
+//     pointer-events: all;
+//     margin-right: 4px;
+//     vertical-align: middle;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px 4px 0px 0px;
+//     padding: 0px;
+// }
+
+// .style-38 {
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-39 {
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-40 {
+//     border-top-width: 0.833333px;
+//     flex-grow: 1;
+//     height: 0px;
+//     box-sizing: border-box;
+//     border-width: 0.833333px 0px 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-41 {
+//     display: none;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-42 {
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 14px;
+//     font-weight: 400;
+//     line-height: 21px;
+//     letter-spacing: normal;
+//     color: rgb(120, 118, 116);
+//     margin: 0px;
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-43 {
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 14px;
+//     font-weight: 400;
+//     line-height: 21px;
+//     letter-spacing: normal;
+//     color: rgb(120, 118, 116);
+//     margin: 0px;
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-44 {
+//     position: relative;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-45 {
+//     overflow-y: hidden;
+//     resize: none;
+//     min-height: 0px;
+//     resize: none;
+//     min-height: 0px;
+//     position: relative;
+//     width: 100%;
+//     border-radius: 6px;
+//     border-width: 0.833333px;
+//     border-color: rgb(230, 228, 225);
+//     background-color: rgb(255, 255, 255);
+//     padding: 8px;
+//     text-align: left;
+//     font-size: 14px;
+//     line-height: 19.6px;
+//     color: rgb(30, 26, 51);
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-weight: 400;
+//     letter-spacing: normal;
+//     margin: 0px;
+//     box-sizing: border-box;
+//     border-style: solid;
+// }
+
+// .style-46 {
+//     justify-content: flex-end;
+//     display: flex;
+//     margin-top: 4px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 4px 0px 0px;
+//     padding: 0px;
+// }
+
+// .style-47 {
+//     border-color: rgb(230, 228, 225);
+//     border-width: 0.833333px;
+//     border-radius: 6px;
+//     cursor: pointer;
+//     width: 2.5rem;
+//     height: 40px;
+//     appearance: button;
+//     background-color: rgba(0, 0, 0, 0);
+//     background-image: none;
+//     text-transform: none;
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 14px;
+//     font-weight: 400;
+//     line-height: 21px;
+//     letter-spacing: normal;
+//     color: rgb(120, 118, 116);
+//     margin: 0px;
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-style: solid;
+// }
+
+// .style-48 {
+//     height: 18px;
+//     width: auto;
+//     display: inline-flex;
+//     pointer-events: all;
+//     color: rgb(255, 255, 255);
+//     fill: rgb(30, 26, 51);
+//     vertical-align: middle;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-49 {
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-50 {
+//     margin-right: 0px;
+//     margin-left: 8px;
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 14px;
+//     font-weight: 400;
+//     line-height: 21px;
+//     letter-spacing: normal;
+//     color: rgb(120, 118, 116);
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-51 {
+//     border-color: rgb(230, 228, 225);
+//     border-width: 0.833333px;
+//     border-radius: 6px;
+//     margin-right: 0px;
+//     margin-left: 8px;
+//     cursor: pointer;
+//     width: 2.5rem;
+//     height: 40px;
+//     appearance: button;
+//     background-color: rgba(0, 0, 0, 0);
+//     background-image: none;
+//     text-transform: none;
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 14px;
+//     font-weight: 400;
+//     line-height: 21px;
+//     letter-spacing: normal;
+//     color: rgb(120, 118, 116);
+//     margin: 0px 0px 0px 8px;
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-style: solid;
+// }
+
+// .style-52 {
+//     height: 18px;
+//     width: auto;
+//     display: inline-flex;
+//     pointer-events: all;
+//     color: rgb(255, 255, 255);
+//     fill: rgb(30, 26, 51);
+//     vertical-align: middle;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-53 {
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+//     margin: 0px;
+//     padding: 0px;
+// }
+
+// .style-54 {
+//     margin-right: 0px;
+//     margin-left: 8px;
+//     font-family: Switzer-Variable, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+//     font-feature-settings: normal;
+//     font-variation-settings: normal;
+//     font-size: 14px;
+//     font-weight: 400;
+//     line-height: 21px;
+//     letter-spacing: normal;
+//     color: rgb(120, 118, 116);
+//     padding: 0px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-55 {
+//     gap: 12px;
+//     align-items: center;
+//     flex-wrap: wrap;
+//     display: flex;
+//     margin-bottom: 16px;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-56 {
+//     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+//     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+//     transition-duration: 0.15s;
+//     color: rgb(30, 26, 51);
+//     line-height: 13px;
+//     font-size: 13px;
+//     text-align: center;
+//     padding-top: 6px;
+//     padding-bottom: 6px;
+//     padding-left: 8px;
+//     padding-right: 8px;
+//     --tw-gradient-to: #FCFBFA 1;
+//     --tw-gradient-from: #fff 1;
+//     background-image: linear-gradient(rgb(255, 255, 255), rgb(252, 251, 250));
+//     border-color: rgb(230, 228, 225);
+//     border-width: 0.833333px;
+//     border-radius: 6px;
+//     white-space: nowrap;
+//     justify-content: center;
+//     align-items: center;
+//     cursor: pointer;
+//     display: flex;
+//     text-decoration: none solid rgb(30, 26, 51);
+//     box-sizing: border-box;
+//     border-style: solid;
+// }
+
+// .style-57 {
+//     height: 11.9922px;
+//     width: auto;
+//     display: flex;
+//     pointer-events: all;
+//     margin-right: 8px;
+//     vertical-align: middle;
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-58 {
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+// .style-59 {
+//     box-sizing: border-box;
+//     border-width: 0px;
+//     border-style: solid;
+//     border-color: rgb(229, 231, 235);
+// }
+
+.incident-header {
+    padding: 20px;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .status {
+    display: flex;
+    align-items: center;
+  }
+  
+  .status-badge {
+    background-color: #FAE6E8;
+    color: #C73C40;
+    padding: 4px 8px;
+    border-radius: 9999px;
+    font-size: 12px;
+    margin-right: 8px;
+  }
+  
+  .incident-title {
+    font-size: 26px;
+    font-weight: 500;
+    margin-right: 8px;
+    color: #1E1A33;
+  }
+  
+  .incident-id {
+    color: #787476;
+    font-size: 12px;
+  }
+  
+  .description p {
+    color: #1E1A33;
+    font-size: 14px;
+    margin-top: 12px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  
+  .action-button {
+    background-color: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #1E1A33;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .action-button:hover {
+    border-color: #7748F6;
+    color: #7748F6;
+  }
+  

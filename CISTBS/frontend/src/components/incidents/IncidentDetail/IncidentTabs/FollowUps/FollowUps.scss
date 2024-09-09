@@ -1,0 +1,259 @@
+.follow-ups-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .follow-ups-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .sort-by {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #787476;
+  }
+  
+  .sort-by label {
+    margin-right: 8px;
+  }
+  
+  .sort-dropdown {
+    padding: 8px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .new-follow-up-button {
+    background-color: #7748F6;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .new-follow-up-button:hover {
+    background-color: #6538D1;
+  }
+  
+  /* Empty State */
+  .no-follow-ups-placeholder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    background-color: #FAFAFA;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .placeholder-image {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .no-follow-ups-message {
+    font-size: 16px;
+    color: #787476;
+    margin-bottom: 20px;
+  }
+  
+  .create-follow-up-link {
+    font-size: 16px;
+    color: #7748F6;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    transition: color 0.3s;
+  }
+  
+  .create-follow-up-link:hover {
+    color: #6538D1;
+  }
+  
+  /* Follow-up Table */
+  .follow-up-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .follow-up-table th,
+  .follow-up-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .follow-up-table th {
+    font-size: 14px;
+    color: #787476;
+  }
+  
+  .follow-up-table td {
+    font-size: 14px;
+    color: #1E1A33;
+  }
+  
+  /* Assignee Info */
+  .assignee-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .assignee-icon {
+    width: 32px;
+    height: 32px;
+    background-color: #7748F6;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  /* Three-dot menu and dropdown */
+  .actions-cell {
+    position: relative;
+  }
+  
+  .three-dot-menu {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+  
+  .dropdown-menu button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #1E1A33;
+    text-align: left;
+    cursor: pointer;
+    padding: 8px 12px;
+    transition: background-color 0.2s;
+  }
+  
+  .dropdown-menu button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dropdown-menu button span {
+    margin-right: 6px;
+  }
+  
+  /* Status Icon Styling */
+.status-icon {
+    cursor: pointer;
+    font-size: 20px;
+    display: inline-block;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+  }
+  
+  .status-icon:hover {
+    background-color: #f0f0f0; /* Light background on hover */
+  }
+  
+  /* Dropdown Menu for Status */
+  .status-dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 8px 0;
+    width: 150px;
+    z-index: 100; /* Ensure it is on top of other elements */
+  }
+  
+  .status-dropdown div {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .status-dropdown div:hover {
+    background-color: #f0f0f0; /* Background color when hovering over options */
+  }
+  
+  .status-dropdown div span {
+    font-size: 18px; /* Slightly larger icon size for status icons */
+  }
+  
+  /* Dropdown Menu for Three-dot Menu */
+  .actions {
+    position: relative;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 25px;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 200; /* Higher z-index than the status dropdown */
+    padding: 8px;
+    width: 120px;
+  }
+  
+  .dropdown-menu button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dropdown-menu button:hover {
+    background-color: #f0f0f0; /* Light background on hover */
+  }
+  
+  /* Additional styles to align dropdown menu with other elements */
+  .three-dot-menu {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  

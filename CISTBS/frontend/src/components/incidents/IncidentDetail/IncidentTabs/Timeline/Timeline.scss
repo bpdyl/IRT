@@ -1,0 +1,266 @@
+.timeline-container {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .event-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .event-textarea {
+    padding: 12px;
+    font-size: 14px;
+    width: 100%;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    resize: none;
+    height: 60px;
+    outline: none;
+    color: #1E1A33;
+  }
+  
+  .submit-event {
+    align-self: flex-end;
+    background-color: #7748F6;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-event:hover {
+    background-color: #6538D1;
+  }
+  
+  /* Scrollable Timeline Events */
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-height: 300px;  /* Max height for the scrollable section */
+    overflow-y: auto;   /* Enable vertical scrolling */
+    padding-right: 10px; /* To avoid content hiding under scrollbar */
+  }
+  
+  /* Vertical line connecting events */
+  .events-list::before {
+    content: '';
+    position: absolute;
+    left: 20px; /* Aligns the line with the middle of the user icon */
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #E5E7EB;
+    z-index: 0;
+  }
+  
+  .timeline-event {
+    display: flex;
+    align-items: flex-start;  /* Align icons and event details at the top */
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  /* User Icon */
+  .user-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #7748F6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    margin-right: 16px;
+    flex-shrink: 0; /* Prevent the icon from shrinking */
+    z-index: 1;
+  }
+  
+  .user-initials {
+    font-size: 14px;
+  }
+  
+  /* Event Details */
+  .event-details {
+    background-color: #FAFAFA;
+    padding: 12px 16px;
+    border-radius: 6px;
+    border: 1px solid #E5E7EB;
+    flex-grow: 1;
+    word-break: break-word; /* Handle long messages by breaking text */
+  }
+  
+  .event-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #787476;
+  }
+  
+  .author {
+    font-weight: 500;
+    color: #1E1A33;
+  }
+  
+  .timestamp {
+    font-style: italic;
+  }
+  
+  .event-message p {
+    margin: 0;
+    color: #1E1A33;
+    font-size: 14px;
+  }
+  
+  /* Status badges */
+  .status-badge {
+    padding: 4px 8px;
+    border-radius: 9999px;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+  
+  .status-badge.success {
+    background-color: #E6F4E9;
+    color: #3DBE56;
+  }
+  
+  .status-badge.warning {
+    background-color: #FFF7E0;
+    color: #F5A623;
+  }
+  
+  /* Comment Icon */
+.comment-icon {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  
+  /* Three Dot Menu */
+  .three-dot-menu {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  
+  /* Dropdown Menu */
+  .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 4px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dropdown-menu button {
+    padding: 4px 8px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+  }
+  
+  .dropdown-menu button:hover {
+    background-color: #f2f2f2;
+  }
+  
+  /* Comment Section */
+  .comment-section {
+    margin-top: 16px;
+  }
+  
+  .comment-section textarea {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    padding: 12px;
+    font-size: 14px;
+    width: 100%;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    resize: none;
+    height: 60px;
+    outline: none;
+    color: #1E1A33;
+  }
+  
+  .comment-section button {
+    padding: 5px 10px;
+    font-size: 12px;
+    background-color: #7748F6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  /* Conversation Thread */
+  .conversation-thread {
+    margin-top: 16px;
+    padding-left: 56px;
+  }
+  
+  .conversation-comment {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .comment-details {
+    background-color: #F0F0F0;
+    padding: 10px;
+    border-radius: 6px;
+    flex-grow: 1;
+  }
+
+  /* Pagination Styling */
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+  
+  .pagination-button {
+    background-color: #7748F6;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination-button:hover:enabled {
+    background-color: #6538D1;
+  }
+  
+  .page-info {
+    font-size: 14px;
+    color: #787476;
+  }
+  
+  
+  
