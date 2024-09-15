@@ -145,20 +145,6 @@ const IncidentCreateForm = ({ onClose }) => {
                 />
             </div>
 
-            <div className="form-group">
-                <label className="form-switch-label">
-                    Is this a Private incident?
-                    <input
-                        type="checkbox"
-                        checked={isPrivate}
-                        onChange={(e) => setIsPrivate(e.target.checked)}
-                        className="form-switch-input"
-                    />
-                </label>
-                <p className="form-helper-text">
-                    Private incidents such as security vulnerabilities will create a private Slack channel and only be accessible to users with private incident permissions.
-                </p>
-            </div>
 
             <div className="form-actions">
                 <button type="button" className="btn-cancel" onClick={onClose}>Cancel</button>
