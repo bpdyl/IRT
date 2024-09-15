@@ -13,6 +13,27 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import AuthTokenSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.http import JsonResponse   #Added to return JSON response for suggestions
+
+### New API View for Incident Suggestions
+class IncidentSuggestionView(APIView):  #New class for handling auto-complete suggestions
+    def get(self, request):
+        query = request.GET.get('q', '')  # Get the query from the URL
+        incident_list = [
+            "Network Failure", "Server Downtime", "Data Breach", "DDoS Attack",
+            "Phishing Attack", "Malware Infection", "Ransomware Attack",
+            "Unauthorized Access", "Insider Threat", "Application Bug",
+            "Database Corruption", "Configuration Error", "Hardware Failure",
+            "Software Vulnerability Exploit", "Power Outage", "Credential Theft",
+            "Spyware Infection", "Physical Security Breach", 
+            "Third-Party Vendor Breach", "Social Engineering Attack"
+        ]  # added manually
+        
+        filtered_incidents = [
+            incident for incident in incident_list if query.lower() in incident.lower()
+        ]
+        
+        return JsonResponse(filtered_incidents[:10], safe=False)  # Return max 10 matching results
 
 class IncidentListCreateView(generics.ListCreateAPIView):
     queryset = Incident.objects.all()

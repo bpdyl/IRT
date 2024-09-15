@@ -96,6 +96,40 @@ h1 {
   border-bottom: none;
 }
 
+/* CSS for the suggestions list dropdown */
+.suggestions-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px; /* Limit the height of the dropdown */
+  overflow-y: auto; /* Enable scrolling if the suggestions list is too long */
+  background-color: #fff; /* Background for the suggestions list */
+  border: 1px solid #ccc; /* Border to make it stand out */
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  position: absolute; /* Ensure the dropdown appears below the input field */
+  z-index: 10; /* Make sure it's above other elements */
+  width: 100%; /* Make the dropdown the same width as the input field */
+}
+
+/* CSS for individual suggestion items */
+.suggestions-list li {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* CSS for the suggestion item on hover */
+.suggestions-list li:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+}
+
+/* CSS to make the suggestions list disappear */
+.hidden {
+  display: none;
+}
+
+
 /* incidents.css */
 
 .modal {
