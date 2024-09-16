@@ -75,7 +75,7 @@ const routes = [
       },
       {
         exact: 'true',
-        path: '/incident-detail',
+        path: '/incidents/:incidentId',
         element: lazy(() => import('./components/incidents/IncidentDetail/IncidentDetailPage'))
       },
     ]
