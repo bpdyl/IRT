@@ -24,14 +24,13 @@
 
 // export default IncidentTabs;
 
-import React, { useState } from 'react';
+import React from 'react';
 import './IncidentTabs.scss';
 import Timeline from './Timeline/Timeline';  // Importing the Timeline component
 import Tasks from './Tasks/Tasks';
 import FollowUps from './FollowUps/FollowUps';
-const IncidentTabs = () => {
-  const [activeTab, setActiveTab] = useState('Timeline');
 
+const IncidentTabs = ({ activeTab, onTabChange, incidentId }) => {
   const tabs = ['Timeline', 'Tasks', 'Follow-ups', 'Status Page', 'Retrospective'];
 
   return (
@@ -41,7 +40,7 @@ const IncidentTabs = () => {
           <button
             key={tab}
             className={`tab-button ${activeTab === tab ? 'active' : ''}`}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => onTabChange(tab)}  // Call parent handler to change tab and update the URL
           >
             {tab}
           </button>
@@ -50,8 +49,8 @@ const IncidentTabs = () => {
       
       <div className="tabs-content">
         {activeTab === 'Timeline' && <Timeline />}
-        {activeTab === 'Tasks' && <Tasks />}
-        {activeTab === 'Follow-ups' && <FollowUps />}
+        {activeTab === 'Tasks' && <Tasks incidentId={incidentId} />}
+        {activeTab === 'Follow-ups' && <FollowUps incidentId={incidentId} />}
         {activeTab === 'Status Page' && <div>Status Page Content</div>}
         {activeTab === 'Retrospective' && <div>Retrospective Content</div>}
       </div>
@@ -60,4 +59,5 @@ const IncidentTabs = () => {
 };
 
 export default IncidentTabs;
+
 

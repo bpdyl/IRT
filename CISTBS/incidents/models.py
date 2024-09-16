@@ -74,9 +74,8 @@ class Incident(models.Model):
     INCIDENT_STATUS_CHOICES = [
         ('Identified', 'Identified'),
         ('Investigating', 'Investigating'),
-        ('Contained', 'Contained'),
-        ('Eradicated', 'Eradicated'),
-        ('Recovered', 'Recovered'),
+        ('Mitigated', 'Mitigated'),
+        ('Resolved', 'Resolved'),
         ('Closed', 'Closed'),
     ]
     SEVERITY_CHOICES = [
@@ -93,7 +92,9 @@ class Incident(models.Model):
     reported_by = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reported_incidents')
     reported_date = models.DateTimeField(auto_now_add=True)
     start_datetime = models.DateTimeField(null=True, blank=True)
-    end_datetime = models.DateTimeField(null=True, blank=True)
+    mitigation_datetime = models.DateTimeField(null=True, blank=True)
+    resolution_datetime = models.DateTimeField(null=True, blank=True)
+    closed_datetime = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=INCIDENT_STATUS_CHOICES)
     initial_entry_point = models.CharField(max_length=50, null=True, blank=True)
     severity = models.CharField(max_length=20, choices=SEVERITY_CHOICES)
@@ -101,9 +102,121 @@ class Incident(models.Model):
     affected_systems = models.ManyToManyField('System', related_name='incidents', blank=True)
     related_incidents = models.ManyToManyField('self', blank=True)
     playbook = models.ForeignKey(Playbook, on_delete=models.SET_NULL, null=True, blank=True, related_name='incidents')
+    teams = models.ManyToManyField('Team', related_name='incidents', blank=True)
+    # The assignments field is handled via the IncidentAssignment model
+    # The retrospective is linked via the Retrospective model
 
     def __str__(self):
         return self.title
+    
+class IncidentRole(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class IncidentAssignment(models.Model):
+    incident = models.ForeignKey(Incident, on_delete=models.CASCADE, related_name='assignments')
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    role = models.ForeignKey(IncidentRole, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user} as {self.role} in {self.incident}"
+    
+class Team(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(null=True, blank=True)
+    members = models.ManyToManyField(AUTH_USER_MODEL, related_name='teams', blank=True)
+
+    def __str__(self):
+        return self.name
+    
+class Task(models.Model):
+    PRIORITY_CHOICES = [
+        ('Low', 'Low'),
+        ('Medium', 'Medium'),
+        ('High', 'High'),
+    ]
+    STATUS_CHOICES = [
+        ('Todo', 'Todo'),
+        ('In Progress', 'In Progress'),
+        ('Completed', 'Completed'),
+    ]
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    incident = models.ForeignKey('Incident', on_delete=models.CASCADE, related_name='tasks')
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    due_date = models.DateField(null=True, blank=True)
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    assignee = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_tasks')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Todo')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+class FollowUp(models.Model):
+    PRIORITY_CHOICES = [
+        ('Low', 'Low'),
+        ('Medium', 'Medium'),
+        ('High', 'High'),
+    ]
+    STATUS_CHOICES = [
+        ('Todo', 'Todo'),
+        ('In Progress', 'In Progress'),
+        ('Done', 'Done'),
+    ]
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    incident = models.ForeignKey('Incident', on_delete=models.CASCADE, related_name='followups')
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    due_date = models.DateField(null=True, blank=True)
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    assignee = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_followups')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Todo')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+    
+
+class TimelineEvent(models.Model):
+    incident = models.ForeignKey(Incident, on_delete=models.CASCADE, related_name='timeline_events')
+    author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    message = models.TextField()
+    event_type = models.CharField(max_length=50)  # e.g., 'task_created', 'incident_updated', etc.
+    data = models.JSONField(blank=True, null=True)  # Optional field to store additional data
+
+    def __str__(self):
+        return f"{self.incident.title} - {self.event_type} at {self.timestamp}"
+
+class TimelineComment(models.Model):
+    event = models.ForeignKey(TimelineEvent, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    message = models.TextField()
+
+    def __str__(self):
+        return f"Comment by {self.author} at {self.timestamp}"
+    
+
+class Retrospective(models.Model):
+    incident = models.OneToOneField(Incident, on_delete=models.CASCADE, related_name='retrospective')
+    owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    summary = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    # Add additional fields as needed
+
+    def __str__(self):
+        return f"Retrospective for {self.incident.title}"
+
 
 class System(models.Model):
     SYSTEM_TYPE_CHOICES = [

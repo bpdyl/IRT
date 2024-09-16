@@ -15,7 +15,6 @@ export const useAuthFetch = () => {
         data: options.data || null, // Attach data if provided (for POST, PUT, etc.)
         params: options.params || null, // Attach query parameters if provided
       });
-      console.log('inside authfetch')
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 401) {
