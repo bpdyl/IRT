@@ -1,220 +1,104 @@
-/* IncidentCreateForm.css */
+/* incidents.css */
 
 .incident-form {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
-  position: relative;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-      transform: translateY(-10px);
-  }
-  to {
-      opacity: 1;
-      transform: translateY(0);
-  }
 }
 
 .form-title {
-  font-size: 22px;
-  font-weight: 600;
-  color: #333;
+  font-size: 24px;
+  font-weight: bold;
   margin-bottom: 20px;
-  text-align: center;
-}
-
-/* CSS for the suggestions list dropdown */
-.suggestions-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  max-height: 150px; /* Limit the height of the dropdown */
-  overflow-y: auto; /* Enable scrolling if the suggestions list is too long */
-  background-color: #fff; /* Background for the suggestions list */
-  border: 1px solid #ccc; /* Border to make it stand out */
-  border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  position: absolute; /* Ensure the dropdown appears below the input field */
-  z-index: 10; /* Make sure it's above other elements */
-  width: 100%; /* Make the dropdown the same width as the input field */
-}
-
-/* CSS for individual suggestion items */
-.suggestions-list li {
-  padding: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-}
-
-/* CSS for the suggestion item on hover */
-.suggestions-list li:hover {
-  background-color: #f0f0f0; /* Light grey background on hover */
-}
-
-/* CSS to make the suggestions list disappear */
-.hidden {
-  display: none;
+  color: #333;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-label {
+.form-group label {
   display: block;
   font-size: 14px;
+  margin-bottom: 5px;
   color: #666;
-  margin-bottom: 8px;
 }
 
 .form-input, .form-textarea, .form-select {
   width: 100%;
   padding: 10px;
-  border-radius: 5px;
   border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 14px;
-  color: #333;
-  transition: border-color 0.3s ease;
-}
-
-.form-input:focus, .form-textarea:focus, .form-select:focus {
-  border-color: #6200ea;
-  outline: none;
 }
 
 .form-textarea {
   resize: vertical;
-  height: 100px;
+  height: 80px;
 }
 
-.severity-description {
-  font-size: 12px;
-  color: #999;
-  margin-top: 5px;
+.form-select {
+  cursor: pointer;
 }
 
-/* .form-checkbox-group {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+.suggestions-list {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0;
+  max-height: 150px;
+  overflow-y: auto;
 }
 
-.form-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 10px;
+.suggestions-list li {
+  padding: 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.suggestions-list li:hover {
   background-color: #f1f1f1;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-.form-checkbox.active {
-  background-color: #6200ea;
-  color: #fff;
-}
-
-.form-checkbox input {
-  display: none;
-}
-
-.form-switch-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.form-switch-input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.form-switch-slider {
-  width: 40px;
-  height: 20px;
-  background-color: #ccc;
-  border-radius: 20px;
-  position: relative;
-  transition: background-color 0.3s ease;
-}
-
-.form-switch-slider:before {
-  content: '';
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background-color: white;
-  top: 1px;
-  left: 1px;
-  transition: transform 0.3s ease;
-}
-
-.form-switch-input:checked + .form-switch-slider {
-  background-color: #6200ea;
-}
-
-.form-switch-input:checked + .form-switch-slider:before {
-  transform: translateX(20px);
-}
-
-.form-helper-text {
-  font-size: 12px;
-  color: #999;
-  margin-top: -5px;
-} */
 
 .form-actions {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
 }
 
 .btn-cancel, .btn-submit {
   padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 30px;
+  border-radius: 4px;
   border: none;
+  font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-cancel {
-  background-color: #e0e0e0;
-  color: #666;
-}
-
-.btn-cancel:hover {
-  background-color: #bdbdbd;
+  background-color: #ccc;
+  color: #fff;
 }
 
 .btn-submit {
   background-color: #6200ea;
-  color: #ffffff;
+  color: #fff;
+}
+
+.btn-cancel:hover {
+  background-color: #999;
 }
 
 .btn-submit:hover {
   background-color: #3700b3;
 }
 
-@media (max-width: 600px) {
-  .incident-form {
-      padding: 20px;
-  }
+.severity-description {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #999;
 }

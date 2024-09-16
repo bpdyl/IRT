@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';  // <-- Added useEffect for fetching suggestions
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import './IncidentCreateForm.css';
-import axios from 'axios';  // <-- Added axios to make requests to the backend
+import axios from 'axios';
 
 const IncidentCreateForm = ({ onClose }) => {
     const [title, setTitle] = useState('');
@@ -9,9 +9,18 @@ const IncidentCreateForm = ({ onClose }) => {
     const [severity, setSeverity] = useState('');
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [isPrivate, setIsPrivate] = useState(false);
-    
-    const [suggestions, setSuggestions] = useState([]);  // <-- Added state for storing suggestions
-    const [showSuggestions, setShowSuggestions] = useState(false);  // <-- Control when to show the suggestions
+
+    // New state for date and time
+    const [creationDateTime, setCreationDateTime] = useState('');
+    const [deadlineDate, setDeadlineDate] = useState('');
+
+    // State for role assignment
+    const [commander, setCommander] = useState(null);
+    const [communicator, setCommunicator] = useState(null);
+    const [resolver, setResolver] = useState(null);
+
+    const [suggestions, setSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
 
     const severityOptions = [
         { value: 'sev0', label: 'SEV0', description: 'Critical system issue', color: '#FF3B30' },
@@ -26,31 +35,34 @@ const IncidentCreateForm = ({ onClose }) => {
         { value: 'security', label: 'Security' },
     ];
 
-    // Fetch suggestions based on user input
+    const roleOptions = [
+        { value: 'user1', label: 'User 1' },
+        { value: 'user2', label: 'User 2' },
+        { value: 'user3', label: 'User 3' },
+    ];
+
     useEffect(() => {
-        if (title.length > 2) {  // Fetch suggestions when the user has typed at least 3 characters
-            axios.get(`http://localhost:8000/api/incidents/suggestions/?query=${title}`)  // <-- Backend API for suggestions
+        if (title.length > 2) {
+            axios.get(`http://localhost:8000/api/incidents/suggestions/?query=${title}`)
                 .then(response => {
-                    // Filter and sort suggestions
                     const filteredSuggestions = response.data.filter(suggestion =>
                         suggestion.toLowerCase().includes(title.toLowerCase())
                     );
                     const sortedSuggestions = filteredSuggestions.sort((a, b) => {
                         const aIndex = a.toLowerCase().indexOf(title.toLowerCase());
                         const bIndex = b.toLowerCase().indexOf(title.toLowerCase());
-                        return aIndex - bIndex;  // Prioritize suggestions where input is found earlier
+                        return aIndex - bIndex;
                     });
-                    setSuggestions(sortedSuggestions);  // Set the filtered and sorted suggestions
-                    setShowSuggestions(true);  // Show the suggestions dropdown
-                    
+                    setSuggestions(sortedSuggestions);
+                    setShowSuggestions(true);
                 })
                 .catch(error => {
                     console.error('Error fetching incident suggestions:', error);
                 });
         } else {
-            setShowSuggestions(false);  // Hide suggestions if input is less than 3 characters
+            setShowSuggestions(false);
         }
-    }, [title]);  // <-- Trigger this effect when 'title' changes
+    }, [title]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -61,19 +73,22 @@ const IncidentCreateForm = ({ onClose }) => {
             severity,
             selectedTypes,
             isPrivate,
-            
+            creationDateTime,
+            deadlineDate,
+            commander,
+            communicator,
+            resolver,
         });
-        onClose(); // Close the form after submission
+        onClose();
     };
 
     const handleTypeChange = (selectedOptions) => {
         setSelectedTypes(selectedOptions);
     };
 
-    // Handle selecting a suggestion from the dropdown
     const handleSuggestionClick = (suggestion) => {
-        setTitle(suggestion);  // Set the selected suggestion as the title
-        setShowSuggestions(false);  // Hide the suggestions dropdown
+        setTitle(suggestion);
+        setShowSuggestions(false);
     };
 
     return (
@@ -91,7 +106,6 @@ const IncidentCreateForm = ({ onClose }) => {
                     className="form-input"
                     autoComplete="off"
                 />
-                {/* Suggestions dropdown */}
                 {showSuggestions && suggestions.length > 0 && (
                     <ul className="suggestions-list">
                         {suggestions.map((suggestion, index) => (
@@ -145,6 +159,62 @@ const IncidentCreateForm = ({ onClose }) => {
                 />
             </div>
 
+            {/* New fields for date and time */}
+            <div className="form-group">
+                <label htmlFor="creation-date-time">Creation Date & Time</label>
+                <input
+                    type="datetime-local"
+                    id="creation-date-time"
+                    value={creationDateTime}
+                    onChange={(e) => setCreationDateTime(e.target.value)}
+                    className="form-input"
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="deadline-date">Deadline Date</label>
+                <input
+                    type="date"
+                    id="deadline-date"
+                    value={deadlineDate}
+                    onChange={(e) => setDeadlineDate(e.target.value)}
+                    className="form-input"
+                />
+            </div>
+
+            {/* Role assignment section */}
+            <div className="form-group">
+                <label htmlFor="commander">Commander</label>
+                <Select
+                    value={commander}
+                    onChange={(selectedOption) => setCommander(selectedOption)}
+                    options={roleOptions}
+                    classNamePrefix="select"
+                    placeholder="Assign Commander"
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="communicator">Communicator</label>
+                <Select
+                    value={communicator}
+                    onChange={(selectedOption) => setCommunicator(selectedOption)}
+                    options={roleOptions}
+                    classNamePrefix="select"
+                    placeholder="Assign Communicator"
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="resolver">Resolver</label>
+                <Select
+                    value={resolver}
+                    onChange={(selectedOption) => setResolver(selectedOption)}
+                    options={roleOptions}
+                    classNamePrefix="select"
+                    placeholder="Assign Resolver"
+                />
+            </div>
 
             <div className="form-actions">
                 <button type="button" className="btn-cancel" onClick={onClose}>Cancel</button>
