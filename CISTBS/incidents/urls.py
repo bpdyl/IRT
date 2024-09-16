@@ -11,6 +11,7 @@ from .views import (
     CopyPlaybookView,
     SyncUserView,
     LoginView,
+    IncidentSuggestionView,
     UserListCreateView,
     TimelineEventListCreateView,
     TimelineEventDetailView,
@@ -51,4 +52,5 @@ urlpatterns = [
     # Timeline Comments URLs
     path('timeline-events/<int:event_id>/comments/', TimelineCommentListCreateView.as_view(), name='timeline-comment-list-create'),
     path('timeline-comments/<int:pk>/', TimelineCommentDetailView.as_view(), name='timeline-comment-detail'),
+    path('incidents/suggestions/', IncidentSuggestionView.as_view(), name='incident-suggestions'),  #Added URL for suggestions
 ]

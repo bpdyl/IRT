@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse   #Added to return JSON response for suggestions
 from .models import (
     Playbook,
     CustomUser,
@@ -39,6 +40,26 @@ from .serializers import (
 )
 
 
+### New API View for Incident Suggestions
+class IncidentSuggestionView(APIView):  # New class for handling auto-complete suggestions
+    def get(self, request):
+        query = request.GET.get('q', '')  # Get the query from the URL
+        incident_list = [
+            "Network Failure", "Server Downtime", "Data Breach", "DDoS Attack",
+            "Phishing Attack", "Malware Infection", "Ransomware Attack",
+            "Unauthorized Access", "Insider Threat", "Application Bug",
+            "Database Corruption", "Configuration Error", "Hardware Failure",
+            "Software Vulnerability Exploit", "Power Outage", "Credential Theft",
+            "Spyware Infection", "Physical Security Breach",
+            "Third-Party Vendor Breach", "Social Engineering Attack"
+        ]  # added manually
+
+        filtered_incidents = [
+            incident for incident in incident_list if query.lower() in incident.lower()
+        ]
+
+        return JsonResponse(filtered_incidents[:10], safe=False)  # Return max 10 matching results
+
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
@@ -61,7 +82,7 @@ class IncidentAssignmentViewSet(viewsets.ModelViewSet):
 
 class IncidentListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]    
+    authentication_classes = [JWTAuthentication]
     queryset = Incident.objects.all()
     serializer_class = IncidentSerializer
 
@@ -186,7 +207,7 @@ class PlaybookDetailView(APIView):
             playbook.save()
             return Response({"message": "Playbook updated successfully"}, status=status.HTTP_200_OK)
         return Response({"error": "Content is required"}, status=status.HTTP_400_BAD_REQUEST)
-
+    
 class CopyPlaybookView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
