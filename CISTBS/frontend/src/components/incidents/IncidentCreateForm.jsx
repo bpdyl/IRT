@@ -36,9 +36,11 @@ const IncidentCreateForm = ({ onClose }) => {
     ];
 
     const roleOptions = [
-        { value: 'user1', label: 'User 1' },
-        { value: 'user2', label: 'User 2' },
-        { value: 'user3', label: 'User 3' },
+        { value: 'User 1', label: 'Subin Timilsina' },
+        { value: 'User 2', label: 'Sanjay Poudel' },
+        { value: 'User 3', label: 'Gaurav Adhikari' },
+        { value: 'User 4', label: 'Neeraj Das' },
+        { value: 'User 5', label: 'Osama Mohomad' },
     ];
 
     useEffect(() => {
@@ -74,10 +76,10 @@ const IncidentCreateForm = ({ onClose }) => {
             selectedTypes,
             isPrivate,
             creationDateTime,
-            deadlineDate,
             commander,
             communicator,
             resolver,
+            deadlineDate,
         });
         onClose();
     };
@@ -159,7 +161,6 @@ const IncidentCreateForm = ({ onClose }) => {
                 />
             </div>
 
-            {/* New fields for date and time */}
             <div className="form-group">
                 <label htmlFor="creation-date-time">Creation Date & Time</label>
                 <input
@@ -171,6 +172,45 @@ const IncidentCreateForm = ({ onClose }) => {
                 />
             </div>
 
+            
+
+            {/* Assign Roles section */}
+            <div className="form-group assign-roles">
+                <h3>Assign Roles</h3>
+                <div className="role-input">
+                    <label htmlFor="commander">Commander</label>
+                    <Select
+                        value={commander}
+                        onChange={(selectedOption) => setCommander(selectedOption)}
+                        options={roleOptions}
+                        classNamePrefix="select"
+                        placeholder="Assign Commander"
+                    />
+                </div>
+
+                <div className="role-input">
+                    <label htmlFor="communicator">Communicator</label>
+                    <Select
+                        value={communicator}
+                        onChange={(selectedOption) => setCommunicator(selectedOption)}
+                        options={roleOptions}
+                        classNamePrefix="select"
+                        placeholder="Assign Communicator"
+                    />
+                </div>
+
+                <div className="role-input">
+                    <label htmlFor="resolver">Resolver</label>
+                    <Select
+                        value={resolver}
+                        onChange={(selectedOption) => setResolver(selectedOption)}
+                        options={roleOptions}
+                        classNamePrefix="select"
+                        placeholder="Assign Resolver"
+                    />
+                </div>
+            </div>
+
             <div className="form-group">
                 <label htmlFor="deadline-date">Deadline Date</label>
                 <input
@@ -179,40 +219,6 @@ const IncidentCreateForm = ({ onClose }) => {
                     value={deadlineDate}
                     onChange={(e) => setDeadlineDate(e.target.value)}
                     className="form-input"
-                />
-            </div>
-
-            {/* Role assignment section */}
-            <div className="form-group">
-                <label htmlFor="commander">Commander</label>
-                <Select
-                    value={commander}
-                    onChange={(selectedOption) => setCommander(selectedOption)}
-                    options={roleOptions}
-                    classNamePrefix="select"
-                    placeholder="Assign Commander"
-                />
-            </div>
-
-            <div className="form-group">
-                <label htmlFor="communicator">Communicator</label>
-                <Select
-                    value={communicator}
-                    onChange={(selectedOption) => setCommunicator(selectedOption)}
-                    options={roleOptions}
-                    classNamePrefix="select"
-                    placeholder="Assign Communicator"
-                />
-            </div>
-
-            <div className="form-group">
-                <label htmlFor="resolver">Resolver</label>
-                <Select
-                    value={resolver}
-                    onChange={(selectedOption) => setResolver(selectedOption)}
-                    options={roleOptions}
-                    classNamePrefix="select"
-                    placeholder="Assign Resolver"
                 />
             </div>
 
