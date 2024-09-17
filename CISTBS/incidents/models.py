@@ -51,7 +51,7 @@ class CustomUser(AbstractUser):
 
 class IncidentType(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -86,7 +86,7 @@ class Incident(models.Model):
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    incident_type = models.ForeignKey(IncidentType, on_delete=models.CASCADE, related_name='incidents')
+    incident_type = models.ForeignKey(IncidentType, on_delete=models.SET_NULL,null=True, related_name='incidents')
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     reported_by = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reported_incidents')
@@ -95,7 +95,7 @@ class Incident(models.Model):
     mitigation_datetime = models.DateTimeField(null=True, blank=True)
     resolution_datetime = models.DateTimeField(null=True, blank=True)
     closed_datetime = models.DateTimeField(null=True, blank=True)
-    status = models.CharField(max_length=20, choices=INCIDENT_STATUS_CHOICES)
+    status = models.CharField(max_length=20, choices=INCIDENT_STATUS_CHOICES,default='Identified')
     initial_entry_point = models.CharField(max_length=50, null=True, blank=True)
     severity = models.CharField(max_length=20, choices=SEVERITY_CHOICES)
     affected_users = models.ManyToManyField(AUTH_USER_MODEL, related_name='affected_incidents', blank=True)

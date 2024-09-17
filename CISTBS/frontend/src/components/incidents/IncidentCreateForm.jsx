@@ -1,97 +1,133 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
+import { useIncidentService } from '../../services/incidentService';
 import './IncidentCreateForm.css';
-import axios from 'axios';
 
 const IncidentCreateForm = ({ onClose }) => {
+    const { fetchteamUsers, fetchTeams, fetchIncidentRoles , fetchSeverities, createSeverity, fetchIncidentTypes, createIncidentType, createIncident, createTeam } = useIncidentService();
+
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const [severity, setSeverity] = useState('');
-    const [selectedTypes, setSelectedTypes] = useState([]);
-    const [isPrivate, setIsPrivate] = useState(false);
+    const [incidentType, setIncidentType] = useState('');
 
-    // New state for date and time
-    const [creationDateTime, setCreationDateTime] = useState('');
+    const [selectedTeams, setSelectedTeams] = useState([]); // Track selected teams
+
     const [deadlineDate, setDeadlineDate] = useState('');
+    const [assignments, setAssignments] = useState([]);  // For role assignments
 
-    // State for role assignment
     const [commander, setCommander] = useState(null);
     const [communicator, setCommunicator] = useState(null);
     const [resolver, setResolver] = useState(null);
 
-    const [suggestions, setSuggestions] = useState([]);
-    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [teams, setTeams] = useState([]);
+    const [teamMembers, setTeamMembers] = useState([]);
+    const [severityOptions, setSeverityOptions] = useState([]);
+    const [incidentTypeOptions, setIncidentTypeOptions] = useState([]);
+    const [rolesOptions, setRolesOptions] = useState([]);  // Assuming you have roles
 
-    const severityOptions = [
-        { value: 'sev0', label: 'SEV0', description: 'Critical system issue', color: '#FF3B30' },
-        { value: 'sev1', label: 'SEV1', description: 'Significant impact where major functionality is impacted', color: '#FF9500' },
-        { value: 'sev2', label: 'SEV2', description: 'Partial degradation or minor issues', color: '#FFCC00' },
-    ];
-
-    const typeOptions = [
-        { value: 'default', label: 'Default' },
-        { value: 'cloud', label: 'Cloud' },
-        { value: 'customer-facing', label: 'Customer Facing' },
-        { value: 'security', label: 'Security' },
-    ];
-
-    const roleOptions = [
-        { value: 'User 1', label: 'Subin Timilsina' },
-        { value: 'User 2', label: 'Sanjay Poudel' },
-        { value: 'User 3', label: 'Gaurav Adhikari' },
-        { value: 'User 4', label: 'Neeraj Das' },
-        { value: 'User 5', label: 'Osama Mohomad' },
-    ];
-
+    // Fetching initial data for dropdowns (teams, severity, users)
     useEffect(() => {
-        if (title.length > 2) {
-            axios.get(`http://localhost:8000/api/incidents/suggestions/?query=${title}`)
-                .then(response => {
-                    const filteredSuggestions = response.data.filter(suggestion =>
-                        suggestion.toLowerCase().includes(title.toLowerCase())
-                    );
-                    const sortedSuggestions = filteredSuggestions.sort((a, b) => {
-                        const aIndex = a.toLowerCase().indexOf(title.toLowerCase());
-                        const bIndex = b.toLowerCase().indexOf(title.toLowerCase());
-                        return aIndex - bIndex;
-                    });
-                    setSuggestions(sortedSuggestions);
-                    setShowSuggestions(true);
-                })
-                .catch(error => {
-                    console.error('Error fetching incident suggestions:', error);
-                });
-        } else {
-            setShowSuggestions(false);
-        }
-    }, [title]);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Handle form submission
-        console.log({
-            title,
-            summary,
-            severity,
-            selectedTypes,
-            isPrivate,
-            creationDateTime,
-            commander,
-            communicator,
-            resolver,
-            deadlineDate,
+        fetchIncidentTypes().then((data) => {
+            const options = data.map((type) => ({ value: type.id, label: type.name }));
+            setIncidentTypeOptions(options);
         });
-        onClose();
+        fetchSeverities().then(setSeverityOptions); // Fetch severity choices from backend
+        // Fetch available teams from backend
+        fetchTeams().then((data)=>{
+            const options = data.map((team) => ({ value: team.id, label: team.name }));
+            setTeams(options);
+        });
+        fetchIncidentRoles().then((data) => {
+            const options = data.map((role) => ({ value: role.id, label: role.name }));
+            setRolesOptions(options);
+        }); 
+    }, []);
+
+    // Fetch members based on selected teams
+    useEffect(() => {
+        if (selectedTeams.length > 0) {
+            const selectedTeamIds = selectedTeams.map(team => team.value);
+            console.log('Selected team IDs:', selectedTeamIds);
+            fetchteamUsers(selectedTeamIds).then(setTeamMembers); // Fetch team members based on selected teams
+        } else {
+            setTeamMembers([]); // Clear team members when no teams are selected
+        }
+    }, [selectedTeams]);
+
+     // Handle on-the-fly creation of incident types
+     const handleCreateIncidentType = (inputValue) => {
+        createIncidentType({ name: inputValue }).then((newType) => {
+            const newOption = { value: newType.id, label: newType.name };
+            setIncidentTypeOptions((prev) => [...prev, newOption]);
+            setIncidentType(newOption);
+        });
     };
 
-    const handleTypeChange = (selectedOptions) => {
-        setSelectedTypes(selectedOptions);
+    // Handle on-the-fly creation of severities
+    const handleCreateSeverity = (inputValue) => {
+        createSeverity({ value: inputValue, label: inputValue }).then((newSeverity) => {
+            const newOption = { value: newSeverity.value, label: newSeverity.label };
+            setSeverityOptions((prev) => [...prev, newOption]);
+            setSeverity(newOption);
+        });
+    };
+    
+    // Handle the on-the-fly team creation
+    const handleCreateTeam = async (newTeamName) => {
+        try {
+            const createdTeam = await createTeam(newTeamName);
+            setTeams(prevTeams => [...prevTeams, { value: createdTeam.id, label: createdTeam.name }]);
+        } catch (error) {
+            console.error('Error creating team:', error);
+        }
     };
 
-    const handleSuggestionClick = (suggestion) => {
-        setTitle(suggestion);
-        setShowSuggestions(false);
+    // Handle adding a new assignment
+    const addAssignment = () => {
+        setAssignments([...assignments, { user: null, role: null }]);
     };
+
+    // Handle assignment changes
+    const handleAssignmentChange = (index, field, value) => {
+        const newAssignments = [...assignments];
+        newAssignments[index][field] = value;
+        setAssignments(newAssignments);
+    };
+
+    // Remove an assignment
+    const removeAssignment = (index) => {
+        const newAssignments = [...assignments];
+        newAssignments.splice(index, 1);
+        setAssignments(newAssignments);
+    };
+
+      const handleSubmit = async (event) => {
+        event.preventDefault();
+      
+        const newIncident = {
+          title,
+          summary,
+          severity: severity ? severity.value : null,  // Extract value
+          incident_type: incidentType ? incidentType.value : null,  // Extract value
+          deadlineDate,
+          teams: selectedTeams.map(team => team.value),  // Send team IDs
+          assignments: assignments.map((assignment) => ({
+            user: assignment.user ? assignment.user.value : null,
+            role: assignment.role ? assignment.role.value : null,
+        })),
+        };
+      
+        try {
+          await createIncident(newIncident);
+          onClose();  // Close the form on successful creation
+        } catch (error) {
+          console.error('Error creating incident:', error);
+        }
+      };
+
+   
 
     return (
         <form onSubmit={handleSubmit} className="incident-form">
@@ -108,15 +144,6 @@ const IncidentCreateForm = ({ onClose }) => {
                     className="form-input"
                     autoComplete="off"
                 />
-                {showSuggestions && suggestions.length > 0 && (
-                    <ul className="suggestions-list">
-                        {suggestions.map((suggestion, index) => (
-                            <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
-                                {suggestion}
-                            </li>
-                        ))}
-                    </ul>
-                )}
             </div>
 
             <div className="form-group">
@@ -125,90 +152,88 @@ const IncidentCreateForm = ({ onClose }) => {
                     id="summary"
                     value={summary}
                     onChange={(e) => setSummary(e.target.value)}
-                    placeholder="Briefly describe the impact of the incident"
+                    placeholder="Briefly describe the incident"
                     className="form-textarea"
                 ></textarea>
             </div>
 
+            {/* Incident Type */}
+            <div className="form-group">
+                <label htmlFor="incident-type">Incident Type</label>
+                <CreatableSelect
+                    id="incident-type"
+                    value={incidentType}
+                    onChange={(selectedOption) => setIncidentType(selectedOption)}
+                    onCreateOption={handleCreateIncidentType}
+                    options={incidentTypeOptions}
+                    classNamePrefix="select"
+                    placeholder="Select or create incident type"
+                />
+            </div>
+
+            {/* Severity */}
             <div className="form-group">
                 <label htmlFor="severity">Severity</label>
-                <select
+                <CreatableSelect
                     id="severity"
                     value={severity}
-                    onChange={(e) => setSeverity(e.target.value)}
-                    className="form-select"
-                >
-                    {severityOptions.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </select>
-                <p className="severity-description">
-                    {severityOptions.find((opt) => opt.value === severity)?.description}
-                </p>
+                    onChange={(selectedOption) => setSeverity(selectedOption)}
+                    onCreateOption={handleCreateSeverity}
+                    options={severityOptions}
+                    classNamePrefix="select"
+                    placeholder="Select or create severity"
+                />
             </div>
 
+            {/* Assigning Multiple Teams */}
             <div className="form-group">
-                <label htmlFor="types">Types</label>
+                <label htmlFor="teams">Teams</label>
+                {/* Handle on-the-fly team creation */}
                 <Select
                     isMulti
-                    value={selectedTypes}
-                    onChange={handleTypeChange}
-                    options={typeOptions}
+                    value={selectedTeams}
+                    onChange={setSelectedTeams}
+                    options={teams}
                     classNamePrefix="select"
-                    placeholder="Select incident types"
+                    placeholder="Select teams"
+                    createOptionPosition="first"
+                    isCreatable   // Add this to allow dynamic creation of options
+                    onCreateOption={handleCreateTeam}  
                 />
+
             </div>
 
-            <div className="form-group">
-                <label htmlFor="creation-date-time">Creation Date & Time</label>
-                <input
-                    type="datetime-local"
-                    id="creation-date-time"
-                    value={creationDateTime}
-                    onChange={(e) => setCreationDateTime(e.target.value)}
-                    className="form-input"
-                />
-            </div>
-
-            
-
-            {/* Assign Roles section */}
+            {/* Assign Roles from Team Members */}
             <div className="form-group assign-roles">
                 <h3>Assign Roles</h3>
-                <div className="role-input">
-                    <label htmlFor="commander">Commander</label>
-                    <Select
-                        value={commander}
-                        onChange={(selectedOption) => setCommander(selectedOption)}
-                        options={roleOptions}
-                        classNamePrefix="select"
-                        placeholder="Assign Commander"
-                    />
-                </div>
-
-                <div className="role-input">
-                    <label htmlFor="communicator">Communicator</label>
-                    <Select
-                        value={communicator}
-                        onChange={(selectedOption) => setCommunicator(selectedOption)}
-                        options={roleOptions}
-                        classNamePrefix="select"
-                        placeholder="Assign Communicator"
-                    />
-                </div>
-
-                <div className="role-input">
-                    <label htmlFor="resolver">Resolver</label>
-                    <Select
-                        value={resolver}
-                        onChange={(selectedOption) => setResolver(selectedOption)}
-                        options={roleOptions}
-                        classNamePrefix="select"
-                        placeholder="Assign Resolver"
-                    />
-                </div>
+                {assignments.map((assignment, index) => (
+                    <div key={index} className="assignment">
+                        <Select
+                            value={assignment.user}
+                            onChange={(selectedOption) => handleAssignmentChange(index, 'user', selectedOption)}
+                            options={teamMembers}
+                            classNamePrefix="select"
+                            placeholder="Select User"
+                        />
+                        <Select
+                            value={assignment.role}
+                            onChange={(selectedOption) => handleAssignmentChange(index, 'role', selectedOption)}
+                            options={rolesOptions}
+                            classNamePrefix="select"
+                            placeholder="Select Role"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => removeAssignment(index)}
+                            className="btn-remove-assignment"
+                        >
+                            Remove
+                        </button>
+                    </div>
+                ))}
+                <button type="button" onClick={addAssignment} className="btn-add-assignment">
+                    Add Assignment
+                </button>
             </div>
 
             <div className="form-group">

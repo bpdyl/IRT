@@ -15,7 +15,7 @@ from .models import (
     Team,
 )
 
-from incidents.middleware import get_current_user
+from backend.authentication import get_current_user
 
 User = get_user_model()
 
@@ -110,10 +110,10 @@ def assignment_post_delete(sender, instance, **kwargs):
     )
 
 # Task signals
-@receiver(pre_save, sender=Task)
-def task_pre_save(sender, instance, **kwargs):
-    if instance.pk:
-        instance._pre_save_instance = Task.objects.get(pk=instance.pk)
+# @receiver(pre_save, sender=Task)
+# def task_pre_save(sender, instance, **kwargs):
+#     if instance.pk:
+#         instance._pre_save_instance = Task.objects.get(pk=instance.pk)
 
 @receiver(post_save, sender=Task)
 def task_post_save(sender, instance, created, **kwargs):

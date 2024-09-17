@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Incident,Playbook,CustomUser,Task,TimelineEvent,TimelineComment,Team,IncidentRole,IncidentAssignment,FollowUp,Retrospective
+from .models import Incident,Playbook,CustomUser,Task,TimelineEvent,TimelineComment,Team,IncidentRole,IncidentAssignment,FollowUp,Retrospective,IncidentType
 import requests
 from django.conf import settings
 import jwt
@@ -24,7 +24,6 @@ class TeamSerializer(serializers.ModelSerializer):
 class IncidentAssignmentSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), required=False, allow_null=True)
     role = serializers.PrimaryKeyRelatedField(queryset=IncidentRole.objects.all())
-
     class Meta:
         model = IncidentAssignment
         fields = ['id', 'incident', 'user', 'role']
@@ -66,7 +65,8 @@ class IncidentSerializer(serializers.ModelSerializer):
         incident.teams.set(teams_data)
 
         for assignment_data in assignments_data:
-            assignment_data['incident'] = incident
+            assignment_data['incident'] = incident.id 
+            print(f'I am here with assignment data: {assignment_data}')
             serializer = IncidentAssignmentSerializer(data=assignment_data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
@@ -112,6 +112,11 @@ class IncidentSerializer(serializers.ModelSerializer):
 class IncidentRoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = IncidentRole
+        fields = '__all__'
+
+class IncidentTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IncidentType
         fields = '__all__'
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -173,7 +178,6 @@ class RetrospectiveSerializer(serializers.ModelSerializer):
 
 class AuthTokenSerializer(serializers.Serializer):
     auth_token = serializers.CharField()
-    print(f'Auth token sent by cleint : {auth_token}')
     def validate_auth_token(self, auth_token):
         auth_token = str.replace(str(auth_token), 'Bearer ', '')
 

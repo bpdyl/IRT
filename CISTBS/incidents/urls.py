@@ -21,6 +21,10 @@ from .views import (
     TeamViewSet,
     IncidentRoleViewSet,
     IncidentAssignmentViewSet,
+    SeverityListView,  # Add SeverityListView
+    # UsersByTeamsView,  # Add UsersByTeamsView
+    fetch_team_users,
+    IncidentTypeCreateView,
 )
 
 router = DefaultRouter()
@@ -52,5 +56,9 @@ urlpatterns = [
     # Timeline Comments URLs
     path('timeline-events/<int:event_id>/comments/', TimelineCommentListCreateView.as_view(), name='timeline-comment-list-create'),
     path('timeline-comments/<int:pk>/', TimelineCommentDetailView.as_view(), name='timeline-comment-detail'),
-    path('incidents/suggestions/', IncidentSuggestionView.as_view(), name='incident-suggestions'),  #Added URL for suggestions
+    # helper API URLS for incident creation 
+    path('severities/', SeverityListView.as_view(), name='severities-list'),
+    path('users-by-teams/', fetch_team_users, name='users-by-teams'),
+    path('incident-types/', IncidentTypeCreateView.as_view(), name='incident-types'),
+    path('incidents/suggestions/', IncidentSuggestionView.as_view(), name='incident-suggestions'),
 ]

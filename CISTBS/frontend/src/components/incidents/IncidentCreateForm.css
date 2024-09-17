@@ -75,30 +75,6 @@
   background-color: #f1f1f1;
 }
 
-.assign-roles {
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.1);
-}
-
-.assign-roles h3 {
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  color: #6200ea;
-}
-
-.role-input {
-  margin-bottom: 15px;
-}
-
-.role-input label {
-  font-size: 14px;
-  margin-bottom: 5px;
-  display: block;
-}
 
 .form-actions {
   display: flex;
@@ -136,3 +112,95 @@
   font-size: 12px;
   color: #999;
 }
+
+/* Assign Roles Section */
+.assign-roles {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;  /* Softer background for contrast */
+  border-radius: 10px;  /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Light shadow for depth */
+
+  h3 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+    color: #6a1b9a;  /* Purple color for title */
+    border-bottom: 2px solid #6200ea;  /* Underline for title */
+    padding-bottom: 10px;
+  }
+
+  .assignment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* Space between select and buttons */
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;  /* White background for individual rows */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    
+    gap: 10px;  /* Adds spacing between select boxes and button */
+    flex-wrap: wrap;  /* Ensures that content wraps on smaller screens */
+
+    .select__control {
+      flex: 1; /* Allow select boxes to take up available space */
+      min-width: 200px;  /* Ensures select boxes don't shrink too much */
+    }
+
+    .btn-remove-assignment {
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      min-width: 100px;  /* Ensures button width stays consistent */
+
+      &:hover {
+        background-color: #c0392b;
+      }
+    }
+  }
+
+  .select__menu {
+    background-color: #fff;
+    border: 1px solid #ccc;
+  }
+  
+  .select__option {
+    padding: 10px;
+    background-color: #fff;
+    color: black;
+  
+    &:hover {
+      background-color: #5d3030;
+      border-radius: 10px;
+      color: white;
+    }
+  }
+
+  .btn-add-assignment {
+    display: inline-block;
+    background-color: #4caf50;  /* Green background */
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+
+    &:hover {
+      background-color: #43a047;
+    }
+  }
+}
+

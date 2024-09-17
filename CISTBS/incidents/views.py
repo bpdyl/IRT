@@ -2,10 +2,11 @@ from rest_framework import generics
 from django.views.generic import TemplateView
 from rest_framework import status
 from rest_framework import viewsets, permissions
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from backend.authentication import CustomJWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse   #Added to return JSON response for suggestions
@@ -20,6 +21,7 @@ from .models import (
     TimelineComment,
     Team,
     IncidentRole,
+    IncidentType,
     IncidentAssignment,
 )
 from django.contrib.auth.models import User
@@ -35,8 +37,8 @@ from .serializers import (
     IncidentRoleSerializer,
     IncidentAssignmentSerializer,
     FollowUpSerializer,
+    IncidentTypeSerializer,
     RetrospectiveSerializer,
-
 )
 
 
@@ -60,16 +62,63 @@ class IncidentSuggestionView(APIView):  # New class for handling auto-complete s
 
         return JsonResponse(filtered_incidents[:10], safe=False)  # Return max 10 matching results
 
+# New view to get severity choices
+class SeverityListView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
+    def get(self, request):
+        # Fetch severity choices from the model
+        severities = [{'name': sev[0], 'label': sev[1]} for sev in Incident.SEVERITY_CHOICES]
+        return Response(severities, status=status.HTTP_200_OK)
+
+
+# Fetch Users Based on Team IDs
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([CustomJWTAuthentication])
+def fetch_team_users(request):
+    team_ids = request.GET.get('team_ids', '').split(',')
+    users = CustomUser.objects.filter(teams__id__in=team_ids).distinct()  # Users in selected teams
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+
+class IncidentTypeCreateView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
+    queryset = IncidentType.objects.all()
+    serializer_class = IncidentTypeSerializer
+
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# @authentication_classes([CustomJWTAuthentication])
+# def fetch_incident_types(request):
+#     incident_types = IncidentType.objects.all()
+#     return Response([{"name": type.name, "id": type.id} for type in incident_types], status=status.HTTP_200_OK)
+# # View to fetch users by selected teams
+# @api_view(['GET'])
+# def UsersByTeamsView(request):
+#     team_ids = request.data.get('teamIds', [])
+#     if not team_ids:
+#         return Response({"detail": "No team IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+#     # Get users from the selected teams
+#     users = CustomUser.objects.filter(teams__id__in=team_ids).distinct()
+#     user_data = [{"id": user.id, "name": user.name or user.email} for user in users]
+
+#     return Response(user_data, status=status.HTTP_200_OK)
+
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
     permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
 
 class IncidentRoleViewSet(viewsets.ModelViewSet):
     serializer_class = IncidentRoleSerializer
     permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
     def get_queryset(self):
-        queryset = IncidentAssignment.objects.all()
+        queryset = IncidentRole.objects.all()
         incident_id = self.request.query_params.get('incident_id')
         if incident_id:
             queryset = queryset.filter(incident_id=incident_id)
@@ -79,23 +128,24 @@ class IncidentAssignmentViewSet(viewsets.ModelViewSet):
     queryset = IncidentAssignment.objects.all()
     serializer_class = IncidentAssignmentSerializer
     permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
 
 class IncidentListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
     queryset = Incident.objects.all()
     serializer_class = IncidentSerializer
 
 class IncidentDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
     queryset = Incident.objects.all()
     serializer_class = IncidentSerializer
 
 class TaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
 
     def get_queryset(self):
         """Get tasks related to a specific incident."""
@@ -105,20 +155,22 @@ class TaskListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         """Create a new task under the given incident."""
         incident_id = self.kwargs['incident_id']
+        print(f'Incident id : {incident_id}')
         incident = Incident.objects.get(id=incident_id)
+        print(f'Incident and requested user: {self.request.user}: type of incident {type(incident)}')
         serializer.save(created_by=self.request.user, incident=incident)
 
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
     queryset = Task.objects.all()
 
 
 class FollowUpListCreateView(generics.ListCreateAPIView):
     serializer_class = FollowUpSerializer
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
 
     def get_queryset(self):
         """Get tasks related to a specific incident."""
@@ -134,7 +186,7 @@ class FollowUpListCreateView(generics.ListCreateAPIView):
 class FollowUpDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = FollowUpSerializer
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
     queryset = FollowUp.objects.all()
 
 class TimelineEventListCreateView(generics.ListCreateAPIView):
@@ -176,13 +228,13 @@ class IndexView(TemplateView):
 
 class UserListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
     serializer_class = UserSerializer
     queryset = CustomUser.objects.all()
 
 class PlaybookListView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
     def get(self, request):
         print(f'Request made by : {request.user}')
         playbooks = Playbook.objects.all()
@@ -191,7 +243,7 @@ class PlaybookListView(APIView):
 
 class PlaybookDetailView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
     def get(self, request, pk):
         print(f'Request made by : {request.user}')
         playbook = get_object_or_404(Playbook, pk=pk)
@@ -210,7 +262,7 @@ class PlaybookDetailView(APIView):
     
 class CopyPlaybookView(APIView):
     permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
 
     def post(self, request, pk):
         playbook = get_object_or_404(Playbook, pk=pk)
