@@ -22,21 +22,52 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'members', 'member_ids']
 
 class IncidentAssignmentSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), required=False, allow_null=True)
+    user = serializers.PrimaryKeyRelatedField(
+        queryset=CustomUser.objects.all(), required=False, allow_null=True
+    )
     role = serializers.PrimaryKeyRelatedField(queryset=IncidentRole.objects.all())
+    incident = serializers.PrimaryKeyRelatedField(
+        queryset=Incident.objects.all(),
+        required=False,
+        allow_null=True,
+        default=None
+    )
+
     class Meta:
         model = IncidentAssignment
         fields = ['id', 'incident', 'user', 'role']
 
     def validate(self, data):
+        # Since 'incident' is not available during validation, we skip validating it here
+        print(f'Data in assignment: {data}')
         user = data.get('user')
-        incident = data.get('incident')
-        if user and incident:
-            user_teams = set(user.teams.all())
-            incident_teams = set(incident.teams.all())
-            if not user_teams.intersection(incident_teams):
-                raise serializers.ValidationError('User must be a member of one of the incident\'s teams.')
+        print(f'User in assignment: {user}')
+        # We cannot perform validation that depends on 'incident' here
         return data
+
+    def create(self, validated_data):
+        # Retrieve 'incident' from the context during creation
+        print(f'Context: {self.context}')
+        print(f'Validated data: {validated_data}')
+        incident = self.context.get('incident')
+        if not incident:
+            raise serializers.ValidationError('Incident is required for assignment creation.')
+
+        validated_data['incident'] = incident
+
+        user = validated_data.get('user')
+        if user:
+            user_teams = set(user.teams.all())
+            print(f'User teams: {user_teams}')
+            incident_teams = set(incident.teams.all())
+            # print(f'Incident teams: {incident_teams}')
+            # if not user_teams.intersection(incident_teams):
+            #     raise serializers.ValidationError(
+            #         'User must be a member of one of the incident\'s teams.'
+            #     )
+
+        return super().create(validated_data)
+
 
 class IncidentSerializer(serializers.ModelSerializer):
     reported_by = UserSerializer(read_only=True)
@@ -44,7 +75,7 @@ class IncidentSerializer(serializers.ModelSerializer):
         many=True, queryset=Team.objects.all(), write_only=True, source='teams', required=False
     )
     teams = TeamSerializer(many=True, read_only=True)
-    assignments = IncidentAssignmentSerializer(many=True, required=False)
+    assignments = IncidentAssignmentSerializer(many=True, required=False, allow_null=True, write_only=True)
 
     class Meta:
         model = Incident
@@ -59,18 +90,27 @@ class IncidentSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'reported_by', 'reported_date']
 
     def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['reported_by'] = user
+
         teams_data = validated_data.pop('teams', [])
-        assignments_data = validated_data.pop('assignments', [])
+        validated_data.pop('assignments', [])  # Remove assignments from validated_data
+
         incident = Incident.objects.create(**validated_data)
         incident.teams.set(teams_data)
 
-        for assignment_data in assignments_data:
-            assignment_data['incident'] = incident.id 
-            print(f'I am here with assignment data: {assignment_data}')
-            serializer = IncidentAssignmentSerializer(data=assignment_data)
+        # Use initial data for assignments
+        initial_assignments = self.initial_data.get('assignments', [])
+
+        for assignment_data in initial_assignments:
+            context = self.context.copy()
+            context.update({'incident': incident})
+            serializer = IncidentAssignmentSerializer(
+                data=assignment_data,
+                context=context
+            )
             serializer.is_valid(raise_exception=True)
             serializer.save()
-
         return incident
 
     def update(self, instance, validated_data):

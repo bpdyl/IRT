@@ -17,10 +17,6 @@ const IncidentCreateForm = ({ onClose }) => {
     const [deadlineDate, setDeadlineDate] = useState('');
     const [assignments, setAssignments] = useState([]);  // For role assignments
 
-    const [commander, setCommander] = useState(null);
-    const [communicator, setCommunicator] = useState(null);
-    const [resolver, setResolver] = useState(null);
-
     const [teams, setTeams] = useState([]);
     const [teamMembers, setTeamMembers] = useState([]);
     const [severityOptions, setSeverityOptions] = useState([]);
@@ -118,6 +114,8 @@ const IncidentCreateForm = ({ onClose }) => {
             role: assignment.role ? assignment.role.value : null,
         })),
         };
+
+        console.log('New Incident:', newIncident);
       
         try {
           await createIncident(newIncident);

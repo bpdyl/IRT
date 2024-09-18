@@ -40,7 +40,7 @@ export const useIncidentService = () => {
   const fetchteamUsers = async (teamIds) => {
     const url = `${REACT_APP_API_SERVER_URL}/api/users-by-teams?team_ids=${teamIds.join(',')}`;
     const response = await authFetch(url);
-    return response.map(user => ({ value: user.id, label: user.name || user.email }));
+    return response.map(user => ({ value: user._id, label: user.name || user.email }));
   };
 
   // Fetch severity choices

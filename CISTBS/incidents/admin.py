@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import (Incident, IncidentType,System,Investigation, Remediation, Recovery,
-Resources, Communication,Reference, Playbook,Task,Team,IncidentRole,IncidentAssignment)
+Resources, Communication,Reference, Playbook,Task,Team,IncidentRole,IncidentAssignment,TimelineEvent, TimelineComment)
 # Register your models here.
 
 admin.site.register(Incident)
@@ -17,6 +17,8 @@ admin.site.register(Task)
 admin.site.register(Team)
 admin.site.register(IncidentRole)
 admin.site.register(IncidentAssignment)
+admin.site.register(TimelineEvent)
+admin.site.register(TimelineComment)
 
 
 
