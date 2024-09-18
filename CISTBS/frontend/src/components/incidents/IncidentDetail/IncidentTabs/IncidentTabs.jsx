@@ -48,7 +48,7 @@ const IncidentTabs = ({ activeTab, onTabChange, incidentId }) => {
       </div>
       
       <div className="tabs-content">
-        {activeTab === 'Timeline' && <Timeline />}
+        {activeTab === 'Timeline' && <Timeline incidentId={incidentId} />}
         {activeTab === 'Tasks' && <Tasks incidentId={incidentId} />}
         {activeTab === 'Follow-ups' && <FollowUps incidentId={incidentId} />}
         {activeTab === 'Status Page' && <div>Status Page Content</div>}

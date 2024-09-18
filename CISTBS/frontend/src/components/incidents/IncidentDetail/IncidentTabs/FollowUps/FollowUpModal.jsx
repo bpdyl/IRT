@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '../../../../../views/ui-elements/Modal/Modal';
+import { useAuthFetch } from '../../../../../hooks/useAuthFetch';
+import { REACT_APP_API_SERVER_URL } from '../../../../../config/constant';
+
 import './FollowUpModal.scss';
 
 const FollowUpModal = ({ isOpen, onClose, onSave, initialData = null, mode = 'create' }) => {
   // Form state variables
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [assignee, setAssignee] = useState('');
+  const [assignee, setAssignee] = useState(initialData ? initialData.assignee?.id : null);
   const [priority, setPriority] = useState('Medium');
   const [dueDate, setDueDate] = useState('');
+  const [users, setUsers] = useState([]);
+
+  const authFetch = useAuthFetch();
 
   // Reset form fields when switching to "create" mode or when opening the modal
   useEffect(() => {
@@ -20,6 +26,21 @@ const FollowUpModal = ({ isOpen, onClose, onSave, initialData = null, mode = 'cr
       setDueDate('');       // Reset due date
     }
   }, [mode, isOpen]);
+
+  useEffect(() => {
+    // Fetch users for the assignee dropdown
+    const fetchUsers = async () => {
+      try {
+        const response = await authFetch(`${REACT_APP_API_SERVER_URL}/api/users/`);
+        console.log(response)
+        setUsers(response);
+      } catch (error) {
+        console.error('Failed to fetch users:', error);
+      }
+    };
+    
+    fetchUsers();
+  }, []);
 
   // Populate form fields when in "edit" mode
   useEffect(() => {
@@ -37,7 +58,7 @@ const FollowUpModal = ({ isOpen, onClose, onSave, initialData = null, mode = 'cr
       const followUpData = {
         title,
         description,
-        assignee,
+        assignee_id: assignee,
         priority,
         dueDate,
       };
@@ -97,10 +118,12 @@ const FollowUpModal = ({ isOpen, onClose, onSave, initialData = null, mode = 'cr
             value={assignee}
             onChange={(e) => setAssignee(e.target.value)}
           >
-            <option value="">Select user</option>
-            <option value="User 1">User 1</option>
-            <option value="User 2">User 2</option>
-            <option value="User 3">User 3</option>
+            <option value={""}>Select assignee</option>
+              {users.map((user) => (
+                <option key={user._id} value={user._id}>
+                  {user.name ? user.name : user.email}
+                </option>
+              ))}
           </select>
         </div>
 

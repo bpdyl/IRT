@@ -28,11 +28,11 @@ export const addFollowUp = createAsyncThunk(
 // Async thunk to delete a followup
 export const deleteFollowUp = createAsyncThunk(
   'followUps/deleteFollowUp',
-  async (taskId, { rejectWithValue }) => {
+  async (followUpId, { rejectWithValue }) => {
     try {
       const { removeFollowUp } = useFollowUpService();
-      await removeFollowUp(taskId);
-      return taskId; // Return taskId to remove it from state
+      await removeFollowUp(followUpId);
+      return followUpId; // Return followUpId to remove it from state
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -42,17 +42,17 @@ export const deleteFollowUp = createAsyncThunk(
 // Async thunk to update a followup
 export const updateFollowUp = createAsyncThunk(
   'followUps/updateFollowUp',
-  async ({ taskId, taskData }, { rejectWithValue }) => {
+  async ({ followUpId, followUpData }, { rejectWithValue }) => {
     try {
       const { updateFollowUp } = useFollowUpService();
-      return await updateFollowUp(taskId, taskData);
+      return await updateFollowUp(followUpId, followUpData);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-const taskSlice = createSlice({
+const followUpSlice = createSlice({
   name: 'followUps',
   initialState: {
     followUps: [],
@@ -97,4 +97,4 @@ const taskSlice = createSlice({
   },
 });
 
-export default taskSlice.reducer;
+export default followUpSlice.reducer;

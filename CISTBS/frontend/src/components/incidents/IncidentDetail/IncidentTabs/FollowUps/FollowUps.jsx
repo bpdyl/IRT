@@ -110,6 +110,7 @@ const FollowUps = ({ incidentId }) => {
   };
 
   const updateFollowUpField = (followUpId, field, value) => {
+    console.log('Follow up ID : ', followUpId, 'Field : ', field, 'Value : ', value);
     const followUpData = { [field]: value };
     dispatch(updateFollowUp({ followUpId, followUpData }));
   };

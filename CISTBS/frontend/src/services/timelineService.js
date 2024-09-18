@@ -7,7 +7,9 @@ export const useTimelineService = () => {
   const authFetch = useAuthFetch();
 
   const getTimelineEvents = async (incidentId) => {
-    const url = `${REACT_APP_API_SERVER_URL}/api/timeline-events/?incident_id=${incidentId}`;
+    // const url = `${REACT_APP_API_SERVER_URL}/api/timeline-events/?incident_id=${incidentId}`;
+    const url = `${REACT_APP_API_SERVER_URL}/api/incidents/${incidentId}/timeline-events/`;
+
     return await authFetch(url);
   };
 
