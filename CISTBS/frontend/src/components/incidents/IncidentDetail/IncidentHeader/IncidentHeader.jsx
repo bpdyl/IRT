@@ -125,7 +125,7 @@ const IncidentHeader = ({ title, description, status, incidentId, onSaveTitle, o
             <div className="action-buttons">
                 <button className="action-button">View Retrospective</button>
                 <button className="action-button">Edit Integrations</button>
-                <button className="action-button">Assign Roles</button>
+                <button className="action-button">Manage Roles</button>
             </div>
         </div>
     );

@@ -194,9 +194,11 @@ const Incidents = () => {
                         <div className="incident-title">
                           <span>{incident.title}</span>
                         </div>
+                        
                         <div className="incident-details">
-                          <span className="severity-pill">{incident.severity}</span>
+                        <span className={`severity-pill ${incident.severity.toLowerCase()}`}>{incident.severity}</span>
                           <span>Started: {new Date(incident.reported_date).toLocaleString()}</span>
+                          {/* <span className="incident-description">{incident.description}</span> */}
                         </div>
                       </div>
                       <div className="incident-footer">

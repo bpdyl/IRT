@@ -218,15 +218,51 @@
   flex-direction: column;
 }
 
-.severity-pill {
-  background-color: #ff5e5e;
-  color: white;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 12px;
-  margin-bottom: 5px;
+/* Severity-specific styling */
+.severity-pill.low {
+  background-color: #4caf50; /* Green for Low */
 }
+
+.severity-pill.medium {
+  background-color: #ffeb3b; /* Yellow for Medium */
+}
+
+.severity-pill.high {
+  background-color: #ff9800; /* Orange for High */
+}
+
+.severity-pill.critical {
+  background-color: #f44336; /* Red for Critical */
+}
+
+/* General incident styling */
+.incident-description {
+  margin-top: 5px;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Keep the rest of your styling */
+.incident {
+  padding: 15px;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.incident-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.incident-details {
+  font-size: 13px;
+  color: #888;
+  display: flex;
+  flex-direction: column;
+}
+
 
 .incident-footer {
   margin-top: 10px;
