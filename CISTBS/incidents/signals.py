@@ -1,8 +1,10 @@
+# signals.py
+
 from django.db.models.signals import pre_save, post_save, post_delete, m2m_changed
 from django.dispatch import receiver
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
+from django.db import transaction
 
 from .models import (
     Incident,
@@ -15,9 +17,24 @@ from .models import (
     Team,
 )
 
+# If you're using thread-local storage to get the current user
+from django.utils.deprecation import MiddlewareMixin
+
+# Define a thread-local storage for the current user
+import threading
+_thread_locals = threading.local()
+
+# def get_current_user():
+#     return getattr(_thread_locals, 'user', None)
+
+# class CurrentUserMiddleware(MiddlewareMixin):
+#     def process_request(self, request):
+#         _thread_locals.user = request.user
+
 from backend.authentication import get_current_user
 
-User = get_user_model()
+
+# Ensure you add 'path.to.CurrentUserMiddleware' to MIDDLEWARE in settings.py
 
 # Utility function to get field changes
 def get_field_changes(instance, pre_instance, fields):
@@ -41,7 +58,10 @@ def get_field_changes(instance, pre_instance, fields):
 @receiver(pre_save, sender=Incident)
 def incident_pre_save(sender, instance, **kwargs):
     if instance.pk:
-        instance._pre_save_instance = Incident.objects.get(pk=instance.pk)
+        try:
+            instance._pre_save_instance = Incident.objects.get(pk=instance.pk)
+        except Incident.DoesNotExist:
+            instance._pre_save_instance = None
 
 @receiver(post_save, sender=Incident)
 def incident_post_save(sender, instance, created, **kwargs):
@@ -55,7 +75,6 @@ def incident_post_save(sender, instance, created, **kwargs):
             event_type='incident_created',
         )
     else:
-        # Incident updated
         pre_instance = getattr(instance, '_pre_save_instance', None)
         if pre_instance:
             fields_to_track = [
@@ -72,6 +91,7 @@ def incident_post_save(sender, instance, created, **kwargs):
                     event_type='incident_updated',
                 )
 
+# Handle incident deletion
 @receiver(post_delete, sender=Incident)
 def incident_post_delete(sender, instance, **kwargs):
     user = get_current_user()
@@ -110,14 +130,18 @@ def assignment_post_delete(sender, instance, **kwargs):
     )
 
 # Task signals
-# @receiver(pre_save, sender=Task)
-# def task_pre_save(sender, instance, **kwargs):
-#     if instance.pk:
-#         instance._pre_save_instance = Task.objects.get(pk=instance.pk)
+@receiver(pre_save, sender=Task)
+def task_pre_save(sender, instance, **kwargs):
+    if instance.pk:
+        try:
+            instance._pre_save_instance = Task.objects.get(pk=instance.pk)
+        except Task.DoesNotExist:
+            instance._pre_save_instance = None
 
 @receiver(post_save, sender=Task)
 def task_post_save(sender, instance, created, **kwargs):
     user = get_current_user()
+    print(f'User: {user}')
     if created:
         message = f"Task '{instance.title}' has been added."
         TimelineEvent.objects.create(
@@ -154,7 +178,10 @@ def task_post_delete(sender, instance, **kwargs):
 @receiver(pre_save, sender=FollowUp)
 def followup_pre_save(sender, instance, **kwargs):
     if instance.pk:
-        instance._pre_save_instance = FollowUp.objects.get(pk=instance.pk)
+        try:
+            instance._pre_save_instance = FollowUp.objects.get(pk=instance.pk)
+        except FollowUp.DoesNotExist:
+            instance._pre_save_instance = None
 
 @receiver(post_save, sender=FollowUp)
 def followup_post_save(sender, instance, created, **kwargs):
@@ -195,13 +222,16 @@ def followup_post_delete(sender, instance, **kwargs):
 @receiver(pre_save, sender=Retrospective)
 def retrospective_pre_save(sender, instance, **kwargs):
     if instance.pk:
-        instance._pre_save_instance = Retrospective.objects.get(pk=instance.pk)
+        try:
+            instance._pre_save_instance = Retrospective.objects.get(pk=instance.pk)
+        except Retrospective.DoesNotExist:
+            instance._pre_save_instance = None
 
 @receiver(post_save, sender=Retrospective)
 def retrospective_post_save(sender, instance, created, **kwargs):
     user = get_current_user()
     if created:
-        message = f"{user.get_full_name()} has been assigned as Retrospective Owner"
+        message = f"Retrospective has been created."
         TimelineEvent.objects.create(
             incident=instance.incident,
             author=user,

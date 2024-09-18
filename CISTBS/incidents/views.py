@@ -192,6 +192,7 @@ class FollowUpDetailView(generics.RetrieveUpdateDestroyAPIView):
 class TimelineEventListCreateView(generics.ListCreateAPIView):
     serializer_class = TimelineEventSerializer
     permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
 
     def get_queryset(self):
         incident_id = self.kwargs['incident_id']

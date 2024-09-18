@@ -1,4 +1,4 @@
-.incident-header {
+.incident-detail-header {
     margin-bottom: 20px;
 
     .status {
@@ -17,7 +17,7 @@
         }
     }
 
-    .incident-title {
+    .incident-detail-title {
         font-size: 24px;  /* Bigger font size */
         font-weight: bold;
         margin-bottom: 8px;
@@ -28,26 +28,26 @@
         display: inline-block;
     }
 
-    .incident-title:hover {
+    .incident-detail-title:hover {
         background-color: #ecebff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Button-like hover effect */
     }
 
-    .incident-id {
+    .incident-detail-id {
         font-size: 14px;
         color: #6c757d;
         margin-left: 10px;
     }
 
     .description {
-        .incident-description {
+        .incident-detail-description {
             cursor: pointer;
             padding: 5px 10px;
             border-radius: 8px;
             transition: background-color 0.3s ease, box-shadow 0.2s ease;
         }
 
-        .incident-description:hover {
+        .incident-detail-description:hover {
             background-color: #ecebff; /* Same hover effect for description */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }

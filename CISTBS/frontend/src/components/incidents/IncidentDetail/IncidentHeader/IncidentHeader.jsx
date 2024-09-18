@@ -1,33 +1,3 @@
-// import React from 'react';
-// import './IncidentHeader.scss';  // You can define your styles here
-
-// const IncidentHeader = () => {
-//   return (
-//     <div className="incident-header">
-//       {/* Status */}
-//       <div className="status">
-//         <span className="status-badge active">Active</span>
-//         <span className="incident-title">favorite_items table has been dropped</span>
-//         <span className="incident-id">#2 Example</span>
-//       </div>
-      
-//       {/* Description */}
-//       <div className="description">
-//         <p>
-//           DROP TABLE has been executed on production environment instead of staging. Lorem Ipsum is simply dummy text of the printing and typesetting industry...
-//         </p>
-//       </div>
-//       {/* Action Button */}
-//       <div className="action-buttons">
-//         <button className="action-button">View Retrospective</button>
-//         <button className="action-button">Edit Integrations</button>
-//         <button className="action-button">Assign Roles</button>
-//     </div>
-//     </div>
-//   );
-// };
-
-// export default IncidentHeader;
 import React, { useState } from 'react';
 import './IncidentHeader.scss';
 
@@ -64,7 +34,7 @@ const IncidentHeader = ({ title, description, status, incidentId, onSaveTitle, o
     };
 
     return (
-        <div className="incident-header">
+        <div className="incident-detail-header">
             {/* Status */}
             <div className="status">
                 <span className={`status-badge ${status === 'Active' ? 'active' : ''}`}>{status}</span>
@@ -88,11 +58,11 @@ const IncidentHeader = ({ title, description, status, incidentId, onSaveTitle, o
               </div>
           ) : (
               <h1
-                  className="incident-title"
+                  className="incident-detail-title"
                   onClick={handleTitleClick}
                   title="Click to edit title"
               >
-                  {newTitle} <span className="incident-id">#{incidentId}</span>
+                  {newTitle} <span className="incident-detail-id">#{incidentId}</span>
               </h1>
           )}
 
@@ -112,7 +82,7 @@ const IncidentHeader = ({ title, description, status, incidentId, onSaveTitle, o
                     </div>
                 ) : (
                     <p
-                        className="incident-description"
+                        className="incident-detail-description"
                         onClick={handleDescriptionClick}
                         title="Click to edit description"
                     >
