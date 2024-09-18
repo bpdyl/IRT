@@ -29,6 +29,14 @@ export const useIncidentService = () => {
     });
   };
 
+  // fetch incident title suggestions 
+  const fetchIncidentSuggestions = async (query) => {
+    const response = await authFetch(
+        `${REACT_APP_API_SERVER_URL}/api/incidents/suggestions/?q=${encodeURIComponent(query)}`
+    );
+    return response;  // Assuming the response data is an array of suggestions
+};
+
   // Fetch all teams
   const fetchTeams = async () => {
     const url = `${REACT_APP_API_SERVER_URL}/api/teams/`;
@@ -105,6 +113,7 @@ export const useIncidentService = () => {
     getIncident,
     updateIncidentTitle,
     updateIncidentDescription,
+    fetchIncidentSuggestions,
     fetchTeams,
     fetchteamUsers,
     fetchSeverities,

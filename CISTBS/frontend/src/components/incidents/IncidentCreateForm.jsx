@@ -5,12 +5,26 @@ import { useIncidentService } from '../../services/incidentService';
 import './IncidentCreateForm.css';
 
 const IncidentCreateForm = ({ onClose }) => {
-    const { fetchteamUsers, fetchTeams, fetchIncidentRoles , fetchSeverities, createSeverity, fetchIncidentTypes, createIncidentType, createIncident, createTeam } = useIncidentService();
+    const { 
+        fetchteamUsers, 
+        fetchTeams, 
+        fetchIncidentSuggestions,
+        fetchIncidentRoles, 
+        fetchSeverities, 
+        createSeverity, 
+        fetchIncidentTypes, 
+        createIncidentType, 
+        createIncident, 
+        createTeam 
+    } = useIncidentService();
 
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const [severity, setSeverity] = useState('');
     const [incidentType, setIncidentType] = useState('');
+
+    const [suggestions, setSuggestions] = useState([]);  // <-- Added state for storing suggestions
+    const [showSuggestions, setShowSuggestions] = useState(false);  // <-- Control when to show the suggestions
 
     const [selectedTeams, setSelectedTeams] = useState([]); // Track selected teams
 
@@ -40,6 +54,39 @@ const IncidentCreateForm = ({ onClose }) => {
             setRolesOptions(options);
         }); 
     }, []);
+
+    // Fetch incident suggestions when title changes
+    useEffect(() => {
+        if (title.length > 2) {  // Fetch suggestions when the user has typed at least 3 characters
+            fetchIncidentSuggestions(title)
+                .then((data) => {
+                    // Filter and sort suggestions
+                    const filteredSuggestions = data.filter(suggestion =>
+                        suggestion.toLowerCase().includes(title.toLowerCase())
+                    );
+                    const sortedSuggestions = filteredSuggestions.sort((a, b) => {
+                        const aIndex = a.toLowerCase().indexOf(title.toLowerCase());
+                        const bIndex = b.toLowerCase().indexOf(title.toLowerCase());
+                        return aIndex - bIndex;  // Prioritize suggestions where input is found earlier
+                    });
+                    setSuggestions(sortedSuggestions);  // Set the filtered and sorted suggestions
+                    setShowSuggestions(true);  // Show the suggestions dropdown
+                })
+                .catch(error => {
+                    console.error('Error fetching incident suggestions:', error);
+                });
+        } else {
+            setShowSuggestions(false);  // Hide suggestions if input is less than 3 characters
+        }
+    }, [title]);  // Trigger this effect when 'title' changes
+
+
+    // Handle selecting a suggestion from the dropdown
+    const handleSuggestionClick = (suggestion) => {
+        setTitle(suggestion);  // Set the selected suggestion as the title
+        setShowSuggestions(false);  // Hide the suggestions dropdown
+    };
+
 
     // Fetch members based on selected teams
     useEffect(() => {
@@ -142,6 +189,16 @@ const IncidentCreateForm = ({ onClose }) => {
                     className="form-input"
                     autoComplete="off"
                 />
+                {/* Suggestions dropdown */}
+                {showSuggestions && suggestions.length > 0 && (
+                    <ul className="suggestions-list">
+                        {suggestions.map((suggestion, index) => (
+                            <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
+                                {suggestion}
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
 
             <div className="form-group">
