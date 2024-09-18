@@ -4,6 +4,13 @@ import { REACT_APP_API_SERVER_URL } from '../config/constant';
 export const useIncidentService = () => {
   const authFetch = useAuthFetch();  // Use the custom auth fetch hook
 
+  // Fetch all incidents
+  const fetchIncidents = async () => {
+    const url = `${REACT_APP_API_SERVER_URL}/api/incidents/`;
+    const response = await authFetch(url);
+    return response;
+  };
+
   // Fetch incident details
   const getIncident = async (incidentId) => {
     const url = `${REACT_APP_API_SERVER_URL}/api/incidents/${incidentId}/`;
@@ -110,6 +117,7 @@ export const useIncidentService = () => {
 
 
   return {
+    fetchIncidents,
     getIncident,
     updateIncidentTitle,
     updateIncidentDescription,
