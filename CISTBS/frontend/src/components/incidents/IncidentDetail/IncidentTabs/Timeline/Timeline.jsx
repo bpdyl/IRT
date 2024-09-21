@@ -531,18 +531,18 @@ const Timeline = ({ incidentId }) => {
                           {/* Dropdown */}
                           {dropdownVisible === event.id && (
                             <div className="dropdown-menu">
-                              <Button
+                              <button
                                 onClick={() =>
                                   handleEditEvent(event.id, event.message)
                                 }
                               >
                                 Edit
-                              </Button>
-                              <Button
+                              </button>
+                              <button
                                 onClick={() => handleDeleteEvent(event.id)}
                               >
                                 Delete
-                              </Button>
+                              </button>
                             </div>
                           )}
                         </>
@@ -557,18 +557,21 @@ const Timeline = ({ incidentId }) => {
                   {/* Event Message */}
                   <div className="event-message">
                     {editingEventId === event.id ? (
-                      <>
-                        <textarea
+                      <div>
+                        <textarea 
+                          className="inline-textarea"
                           value={editedMessage}
                           onChange={(e) => setEditedMessage(e.target.value)}
                         />
-                        <button onClick={() => handleSaveEvent(event.id)}>
-                          Save
-                        </button>
-                        <button onClick={() => setEditingEventId(null)}>
-                          Cancel
-                        </button>
-                      </>
+                        <div className="edit-controls">
+                          <button className="save-button" onClick={() => handleSaveEvent(event.id)}>
+                            ✓
+                          </button>
+                          <button className="cancel-button" onClick={() => setEditingEventId(null)}>
+                            X
+                          </button>
+                        </div>
+                      </div>
                     ) : (
                       <p>
                         {event.message}{' '}

@@ -114,11 +114,6 @@
     font-style: italic;
   }
   
-  .event-message p {
-    margin: 0;
-    color: #1E1A33;
-    font-size: 14px;
-  }
   
   /* Status badges */
   .status-badge {
@@ -262,5 +257,70 @@
     color: #787476;
   }
   
+  .event-message {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   
+    p {
+      margin: 0;
+      color: #1E1A33;
+      font-size: 14px;
+    }
+    
+    .edit-controls {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      margin-top: 8px; /* Add some space between textarea and buttons */
+    }
+    
+    .save-button, .cancel-button { 
+      cursor: pointer;
+      background-color: #7748f6;
+      color: white;
+      border: none;
+      border-radius: 50%; /* Make them round */
+      padding: 6px;
+      width: 35px; /* Fixed width for icon buttons */
+      height: 35px; /* Fixed height for icon buttons */
+      margin-right: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+  
+    .save-button {
+      background-color: #7748f6;
+    }
+  
+    .save-button:hover {
+      background-color: #6538d1;
+    }
+  
+    .cancel-button {
+      background-color: #e0e0e0;
+      color: #333;
+    }
+  
+    .cancel-button:hover {
+      background-color: #cccccc;
+    }
+  
+    .save-button svg, .cancel-button svg {
+      font-size: 18px; /* Adjust icon size */
+    }
+  
+    .inline-textarea {
+      font-size: 16px;
+      padding: 4px 8px;
+      margin-right: 10px;
+      border: 1px solid #99deee;
+      border-radius: 4px;
+      width: calc(100% - 40px); /* Adjust to fit inside the container */
+      height: 60px;
+      resize: none;
+    }
+  }
   
