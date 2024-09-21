@@ -75,7 +75,7 @@ class IncidentSerializer(serializers.ModelSerializer):
         many=True, queryset=Team.objects.all(), write_only=True, source='teams', required=False
     )
     teams = TeamSerializer(many=True, read_only=True)
-    assignments = IncidentAssignmentSerializer(many=True, required=False, allow_null=True, write_only=True)
+    assignments = IncidentAssignmentSerializer(many=True, required=False, allow_null=True)
 
     class Meta:
         model = Incident
@@ -180,7 +180,7 @@ class FollowUpSerializer(serializers.ModelSerializer):
 
 class TimelineCommentSerializer(serializers.ModelSerializer):
     author_name = serializers.CharField(source='author.username', read_only=True)
-
+    author = UserSerializer(read_only=True)
     class Meta:
         model = TimelineComment
         fields = ['id', 'event', 'author', 'author_name', 'timestamp', 'message']

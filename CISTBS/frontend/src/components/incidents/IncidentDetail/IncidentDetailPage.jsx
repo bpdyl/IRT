@@ -6,6 +6,7 @@ import { fetchIncident } from '../../../redux/reducer/incidentSlice';
 import { useIncidentService } from '../../../services/incidentService';
 import IncidentHeader from './IncidentHeader/IncidentHeader';
 import IncidentTabs from './IncidentTabs/IncidentTabs';
+import IncidentSidebar from './IncidentSidebar';
 import './IncidentDetailPage.scss';
 
 const IncidentDetailPage = ({ incidentId: propIncidentId }) => {

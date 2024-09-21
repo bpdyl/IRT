@@ -206,10 +206,13 @@ class TimelineEventDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TimelineEvent.objects.all()
     serializer_class = TimelineEventSerializer
     permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
 
 class TimelineCommentListCreateView(generics.ListCreateAPIView):
     serializer_class = TimelineCommentSerializer
     permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
+
 
     def get_queryset(self):
         event_id = self.kwargs['event_id']
@@ -222,6 +225,7 @@ class TimelineCommentListCreateView(generics.ListCreateAPIView):
 class TimelineCommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TimelineComment.objects.all()
     serializer_class = TimelineCommentSerializer
+    authentication_classes = [CustomJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
 class IndexView(TemplateView):
@@ -237,7 +241,6 @@ class PlaybookListView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [CustomJWTAuthentication]
     def get(self, request):
-        print(f'Request made by : {request.user}')
         playbooks = Playbook.objects.all()
         serializer = PlaybookSerializer(playbooks, many=True)
         return Response(serializer.data)

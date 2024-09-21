@@ -14,7 +14,7 @@ export const useTimelineService = () => {
   };
 
   const createTimelineEvent = async (incidentId, newEvent) => {
-    const url = `${REACT_APP_API_SERVER_URL}/api/timeline-events/`;
+    const url = `${REACT_APP_API_SERVER_URL}/api/incidents/${incidentId}/timeline-events/`;
     return await authFetch(url, {
       method: 'POST',
       data: { ...newEvent, incident: incidentId },
@@ -34,11 +34,12 @@ export const useTimelineService = () => {
     return await authFetch(url, { method: 'DELETE' });
   };
 
-  const addComment = async (eventId, comment) => {
-    const url = `${REACT_APP_API_SERVER_URL}/api/timeline-comments/`;
+  //timeline-events/<int:event_id>/comments/
+  const addComment = async (eventId, commentObj) => {
+    const url = `${REACT_APP_API_SERVER_URL}/api/timeline-events/${eventId}/comments/`;
     return await authFetch(url, {
       method: 'POST',
-      data: { event: eventId, message: comment },
+      data: { event: eventId, message: commentObj['message'] },
     });
   };
 

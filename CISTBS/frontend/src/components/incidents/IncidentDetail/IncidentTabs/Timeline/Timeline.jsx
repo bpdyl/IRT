@@ -269,7 +269,7 @@ import React, { useState, useEffect } from 'react';
 import './Timeline.scss';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTimelineService } from '../../../../../services/timelineService';
-
+import { Button, Alert } from 'react-bootstrap';
 
 
 const Timeline = ({ incidentId }) => {
@@ -283,7 +283,7 @@ const Timeline = ({ incidentId }) => {
 
   const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
   // const { currentUser } = useAuth(); // Assume this hook provides current user info
-  const currentUserId = currentUser ? currentUser.id : null;
+  const currentUserEmail = currentUser ? currentUser.email : null;
 
   const eventsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
@@ -324,7 +324,7 @@ const Timeline = ({ incidentId }) => {
           event_type: 'user_note', // Use a default event type or allow user selection
         };
         const response = await createTimelineEvent(incidentId, newEntryData);
-        const newEntry = response.data;
+        const newEntry = response;
         setAllEvents([newEntry, ...allEvents]);
         setNewEvent('');
       } catch (error) {
@@ -347,7 +347,7 @@ const Timeline = ({ incidentId }) => {
         message: editedMessage,
       };
       const response = await updateTimelineEvent(eventId, updatedEventData);
-      const updatedEvent = response.data;
+      const updatedEvent = response;
 
       setAllEvents(
         allEvents.map((event) =>
@@ -382,7 +382,7 @@ const Timeline = ({ incidentId }) => {
           message: commentText,
         };
         const response = await addComment(eventId, commentData);
-        const newCommentObj = response.data;
+        const newCommentObj = response;
 
         setAllEvents(
           allEvents.map((event) =>
@@ -420,6 +420,8 @@ const Timeline = ({ incidentId }) => {
     startIndex + eventsPerPage
   );
 
+  console.log('Current Events : ', currentEvents);
+
   const handlePageChange = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
@@ -428,7 +430,8 @@ const Timeline = ({ incidentId }) => {
 
   return (
     <div className="timeline-container">
-      {error && <div className="error-message">{error}</div>}
+      {/* {error && <div className="error-message">{error}</div>} */}
+      {error && <Alert variant="danger" className="my-4 text-center">{error}</Alert>}
 
       {/* Event Add Section */}
       <div className="timeline-event">
@@ -500,12 +503,11 @@ const Timeline = ({ incidentId }) => {
                   <div className="event-header">
                     <span className="author">
                       {event.author
-                        ? event.author.name ||
-                          event.author.email ||
-                          'Unknown'
-                        : 'System'}
+                        ? event.author.name ||' ' ||
+                          event.author.email || ' ' ||
+                          'Unknown '
+                        : 'System '} 
                     </span>
-
                     <div className="timestamp-actions">
                       {/* Comment Icon */}
                       <button
@@ -515,8 +517,9 @@ const Timeline = ({ incidentId }) => {
                         💬
                       </button>
 
+
                       {/* Show edit/delete options only if the current user is the author */}
-                      {event.author && event.author._id === currentUserId && (
+                      {event.author && event.author.email === currentUserEmail && (
                         <>
                           <button
                             className="three-dot-menu"
@@ -528,18 +531,18 @@ const Timeline = ({ incidentId }) => {
                           {/* Dropdown */}
                           {dropdownVisible === event.id && (
                             <div className="dropdown-menu">
-                              <button
+                              <Button
                                 onClick={() =>
                                   handleEditEvent(event.id, event.message)
                                 }
                               >
                                 Edit
-                              </button>
-                              <button
+                              </Button>
+                              <Button
                                 onClick={() => handleDeleteEvent(event.id)}
                               >
                                 Delete
-                              </button>
+                              </Button>
                             </div>
                           )}
                         </>
