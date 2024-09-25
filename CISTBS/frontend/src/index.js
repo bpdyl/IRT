@@ -11,6 +11,9 @@ import { Auth0ProviderWithNavigate } from './store/Auth0ProviderWithNavigate';
 import { Provider as ReduxProvider } from 'react-redux'; // <-- Import Redux Provider
 import store from './redux/store/store'; // <-- Import Redux store
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'leaflet/dist/leaflet.css';
+
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 const container = document.getElementById('root');
 const root = createRoot(container);
