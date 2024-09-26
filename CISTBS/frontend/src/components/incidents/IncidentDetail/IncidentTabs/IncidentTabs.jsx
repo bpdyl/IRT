@@ -1,38 +1,13 @@
-// // IncidentTabs.jsx
-// import React from 'react';
-// import './IncidentTabs.scss';
-
-// const IncidentTabs = ({ activeTab, onTabChange }) => {
-//   const tabs = ['Timeline', 'Tasks', 'Follow-ups', 'Status Page', 'Retrospective'];
-
-//   return (
-//     <div className="incident-tabs">
-//       <ul>
-//         {tabs.map((tab) => (
-//           <li
-//             key={tab}
-//             className={activeTab === tab ? 'active' : ''}
-//             onClick={() => onTabChange(tab)}
-//           >
-//             {tab}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default IncidentTabs;
-
 import React from 'react';
 import './IncidentTabs.scss';
-import Timeline from './Timeline/Timeline';  // Importing the Timeline component
+import Timeline from './Timeline/Timeline';  
 import Tasks from './Tasks/Tasks';
 import FollowUps from './FollowUps/FollowUps';
+import Retrospective from './Retrospective/Retrospective';
 
-const IncidentTabs = ({ activeTab, onTabChange, incidentId }) => {
-  const tabs = ['Timeline', 'Tasks', 'Follow-ups', 'Status Page', 'Retrospective'];
-
+const IncidentTabs = ({ activeTab, onTabChange, incident }) => {
+  const tabs = ['Timeline', 'Tasks', 'Follow-ups', 'Retrospective'];
+  console.log('Incident: ', incident);
   return (
     <div className="tabs-container">
       <div className="tabs-header">
@@ -48,11 +23,10 @@ const IncidentTabs = ({ activeTab, onTabChange, incidentId }) => {
       </div>
       
       <div className="tabs-content">
-        {activeTab === 'Timeline' && <Timeline incidentId={incidentId} />}
-        {activeTab === 'Tasks' && <Tasks incidentId={incidentId} />}
-        {activeTab === 'Follow-ups' && <FollowUps incidentId={incidentId} />}
-        {activeTab === 'Status Page' && <div>Status Page Content</div>}
-        {activeTab === 'Retrospective' && <div>Retrospective Content</div>}
+        {activeTab === 'Timeline' && <Timeline incidentId={incident.id} />}
+        {activeTab === 'Tasks' && <Tasks incidentId={incident.id} />}
+        {activeTab === 'Follow-ups' && <FollowUps incidentId={incident.id} />}
+        {activeTab === 'Retrospective' && <Retrospective incident={incident}/>}
       </div>
     </div>
   );
