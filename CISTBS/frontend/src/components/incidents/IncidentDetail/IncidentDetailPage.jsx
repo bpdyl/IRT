@@ -94,7 +94,7 @@ const IncidentDetailPage = ({ incidentId: propIncidentId }) => {
                 onSaveDescription={handleSaveDescription}
             />
 
-            <IncidentTabs activeTab={activeTab} onTabChange={handleTabChange} incidentId={incidentId} />
+            <IncidentTabs activeTab={activeTab} onTabChange={handleTabChange} incident={incident} />
         </div>
     );
 };
