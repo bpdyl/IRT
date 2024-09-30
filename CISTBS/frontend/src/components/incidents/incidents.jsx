@@ -327,9 +327,9 @@ const Incidents = () => {
       ))}
 
       {isFormOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close-button" onClick={handleCloseForm}>
+        <div className="incident-create-modal">
+          <div className="incident-modal-content">
+            <span className="modal-close-button" onClick={handleCloseForm}>
               &times;
             </span>
             <IncidentCreateForm onClose={handleCloseForm} />

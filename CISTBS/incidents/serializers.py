@@ -85,7 +85,7 @@ class IncidentSerializer(serializers.ModelSerializer):
             'resolution_datetime', 'closed_datetime', 'status',
             'initial_entry_point', 'severity', 'affected_users',
             'affected_systems', 'related_incidents', 'playbook',
-            'teams', 'team_ids', 'assignments',
+            'teams', 'team_ids', 'assignments','mitigation_description','resolution_description'
         ]
         read_only_fields = ['id', 'reported_by', 'reported_date']
 

@@ -15,7 +15,17 @@ export const useIncidentService = () => {
   const getIncident = async (incidentId) => {
     const url = `${REACT_APP_API_SERVER_URL}/api/incidents/${incidentId}/`;
     const response = await authFetch(url);
+    console.log('Incident Data: '+ response);
     return response;  // <-- Make sure to return the response
+  };
+
+ // Update incident with data (multiple fields)
+  const updateIncident = async (incidentId, data) => {
+    const url = `${REACT_APP_API_SERVER_URL}/api/incidents/${incidentId}/`;
+    return await authFetch(url, {
+      method: 'PATCH',
+      data,
+    });
   };
 
   // Update incident title
@@ -115,10 +125,26 @@ export const useIncidentService = () => {
     });
   };
 
+  // Fetch retrospective
+  const getRetrospective = async (incidentId) => {
+    const url = `${REACT_APP_API_SERVER_URL}/api/incidents/${incidentId}/retrospective/`;
+    return await authFetch(url);
+  };
+
+  // Update retrospective
+  const updateRetrospective = async (incidentId, data) => {
+    const url = `${REACT_APP_API_SERVER_URL}/api/incidents/${incidentId}/retrospective/`;
+    return await authFetch(url, {
+      method: 'PATCH',
+      data
+    });
+  };
+
 
   return {
     fetchIncidents,
     getIncident,
+    updateIncident,
     updateIncidentTitle,
     updateIncidentDescription,
     fetchIncidentSuggestions,
@@ -131,5 +157,7 @@ export const useIncidentService = () => {
     fetchIncidentRoles,
     createIncident,
     createTeam,
+    getRetrospective,
+    updateRetrospective
   };
 };

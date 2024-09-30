@@ -10,7 +10,8 @@ import IncidentSidebar from './IncidentSidebar';
 import './IncidentDetailPage.scss';
 
 const IncidentDetailPage = ({ incidentId: propIncidentId }) => {
-    const incident = useSelector((state) => state.incident);  // Get incident state from Redux
+    const incidentState = useSelector((state) => state.incident);  // Get incident state from Redux
+    const { incident, loading, error } = incidentState;
     const dispatch = useDispatch();
     const { incidentId: urlIncidentId } = useParams();  // Get incidentId from the URL if available
     const incidentId = propIncidentId || urlIncidentId;  // Use the prop incidentId or fallback to the URL param
@@ -21,7 +22,6 @@ const IncidentDetailPage = ({ incidentId: propIncidentId }) => {
 
     const getTabFromUrl = () => {
         const params = new URLSearchParams(location.search);  // Parse the query parameters
-        console.log('Params: ', params);
         return params.get('tab') || 'Timeline';  // Default to 'Timeline' if no tab is specified
     };
     const [activeTab, setActiveTab] = useState(getTabFromUrl());  // Initialize tab from URL
@@ -32,6 +32,7 @@ const IncidentDetailPage = ({ incidentId: propIncidentId }) => {
         if (incidentId) {
             dispatch(fetchIncident(incidentId));  // Dispatch Redux action to fetch the incident
         }
+
     }, [incidentId, dispatch]);
 
      // Ensure tab state is synced with URL after the page loads
@@ -68,17 +69,18 @@ const IncidentDetailPage = ({ incidentId: propIncidentId }) => {
         }
     };
 
+
     // If loading, show spinner
-    if (incident.loading) {
+    if (loading) {
         return <Spinner animation="border" variant="primary" className="d-block mx-auto my-4" />;
     }
 
     // If error occurs, show alert
-    if (incident.error) {
+    if (error) {
         return <Alert variant="danger" className="my-4 text-center">{incident.error}</Alert>;
     }
 
-    if (!incident.id) {
+    if (!incident) {
         return <div>No incident found.</div>;
     }
 

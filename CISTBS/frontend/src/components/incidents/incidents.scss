@@ -371,7 +371,7 @@
 }
 
 /* Modal Styles */
-.modal {
+.incident-create-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -384,7 +384,7 @@
   z-index: 1000;
 }
 
-.modal-content {
+.incident-modal-content {
   background-color: white;
   padding: 25px;
   border-radius: 8px;
@@ -393,7 +393,7 @@
   position: relative;
 }
 
-.close-button {
+.modal-close-button {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -402,7 +402,7 @@
   color: #aaa;
 }
 
-.close-button:hover {
+.modal-close-button:hover {
   color: #000;
 }
 

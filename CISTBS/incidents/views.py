@@ -88,25 +88,6 @@ class IncidentTypeCreateView(generics.ListCreateAPIView):
     queryset = IncidentType.objects.all()
     serializer_class = IncidentTypeSerializer
 
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# @authentication_classes([CustomJWTAuthentication])
-# def fetch_incident_types(request):
-#     incident_types = IncidentType.objects.all()
-#     return Response([{"name": type.name, "id": type.id} for type in incident_types], status=status.HTTP_200_OK)
-# # View to fetch users by selected teams
-# @api_view(['GET'])
-# def UsersByTeamsView(request):
-#     team_ids = request.data.get('teamIds', [])
-#     if not team_ids:
-#         return Response({"detail": "No team IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
-
-#     # Get users from the selected teams
-#     users = CustomUser.objects.filter(teams__id__in=team_ids).distinct()
-#     user_data = [{"id": user.id, "name": user.name or user.email} for user in users]
-
-#     return Response(user_data, status=status.HTTP_200_OK)
-
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
@@ -227,6 +208,24 @@ class TimelineCommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TimelineCommentSerializer
     authentication_classes = [CustomJWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+
+class RetrospectiveDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = RetrospectiveSerializer
+    permission_classes = [IsAuthenticated]  
+    authentication_classes = [CustomJWTAuthentication]
+
+    def get_object(self):
+        incident_id = self.kwargs.get('incident_id')
+        try:
+            incident = Incident.objects.get(id=incident_id)
+            return Retrospective.objects.get(incident=incident)
+        except Retrospective.DoesNotExist:
+            # If Retrospective doesn't exist, create it
+            return Retrospective.objects.create(incident=incident)
+
+    def perform_update(self, serializer):
+        serializer.save()
 
 class IndexView(TemplateView):
     template_name = 'index.html'

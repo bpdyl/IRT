@@ -26,7 +26,7 @@ const IncidentTabs = ({ activeTab, onTabChange, incident }) => {
         {activeTab === 'Timeline' && <Timeline incidentId={incident.id} />}
         {activeTab === 'Tasks' && <Tasks incidentId={incident.id} />}
         {activeTab === 'Follow-ups' && <FollowUps incidentId={incident.id} />}
-        {activeTab === 'Retrospective' && <Retrospective incident={incident}/>}
+        {activeTab === 'Retrospective' && <Retrospective incidentId={incident.id}/>}
       </div>
     </div>
   );

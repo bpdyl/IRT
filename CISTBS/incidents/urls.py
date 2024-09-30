@@ -19,6 +19,7 @@ from .views import (
     TimelineEventDetailView,
     TimelineCommentListCreateView,
     TimelineCommentDetailView,
+    RetrospectiveDetailView,
      # New views for teams and roles
     TeamViewSet,
     IncidentRoleViewSet,
@@ -49,6 +50,7 @@ urlpatterns = [
     path('tasks/<uuid:pk>/', TaskDetailView.as_view(), name='task-detail'),
     path('incidents/<uuid:incident_id>/follow_ups/', FollowUpListCreateView.as_view(), name='followup-list-create'),
     path('follow_ups/<uuid:pk>/', FollowUpDetailView.as_view(), name='task-detail'),
+    path('incidents/<uuid:incident_id>/retrospective/', RetrospectiveDetailView.as_view(), name='retrospective-detail'),
     path('playbooks/', PlaybookListView.as_view(), name='playbook_list'),
     path('playbooks/<uuid:pk>/', PlaybookDetailView.as_view(), name='playbook_detail'),
     path('playbooks/<uuid:pk>/update/', PlaybookDetailView.as_view(), name='playbook_update'),

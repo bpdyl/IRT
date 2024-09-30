@@ -242,8 +242,14 @@ def retrospective_post_save(sender, instance, created, **kwargs):
         pre_instance = getattr(instance, '_pre_save_instance', None)
         if pre_instance:
             changes = []
-            if pre_instance.summary != instance.summary:
-                changes.append("Retrospective summary has been updated.")
+            if pre_instance.title != instance.title:
+                changes.append("Retrospective title has been updated.")
+            if pre_instance.status != instance.status:
+                changes.append(f"Retrospective status changed from '{pre_instance.status}' to '{instance.status}'.")
+            if pre_instance.due_date != instance.due_date:
+                changes.append(f"Retrospective due date changed from '{pre_instance.due_date}' to '{instance.due_date}'.")
+            if pre_instance.content != instance.content:
+                changes.append("Retrospective content has been updated.")
             if pre_instance.owner != instance.owner:
                 changes.append(f"Retrospective owner changed from '{pre_instance.owner}' to '{instance.owner}'")
             if changes:
