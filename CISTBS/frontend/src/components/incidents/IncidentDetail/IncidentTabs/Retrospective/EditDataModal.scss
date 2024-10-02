@@ -86,3 +86,90 @@
     border-color: #7748F6;
   }
   
+  .custom-multi-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 6px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    cursor: pointer;
+  
+    &:focus-within {
+      border-color: #7748F6;
+    }
+  }
+  
+  .selected-items {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 1;
+  }
+  
+  .chip {
+    display: flex;
+    align-items: center;
+    background-color: #E5E7EB;
+    border-radius: 16px;
+    padding: 4px 8px;
+    margin: 2px;
+    font-size: 14px;
+  }
+  
+  .remove-icon {
+    margin-left: 4px;
+    cursor: pointer;
+  }
+  
+  .input-field {
+    border: none;
+    outline: none;
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  .dropdown-icon {
+    margin-left: auto;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    z-index: 1;
+  }
+  
+  .dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: #F3F4F6;
+    }
+  }
+
+  .react-select__control {
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    min-height: 38px;
+  }
+  
+  .react-select__multi-value {
+    .css-1p3m7a8-multiValue{
+        background-color: #E5E7EB;
+        border-radius: 10px;
+        padding: 4px 8px;
+        margin: 2px;
+    }
+
+  }
+
+  

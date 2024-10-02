@@ -78,6 +78,12 @@ const routes = [
         path: '/incidents/:incidentId',
         element: lazy(() => import('./components/incidents/IncidentDetail/IncidentDetailPage'))
       },
+      {
+        exact: 'true',
+        path: '/incidents/:incidentId/retrospective/report',
+        element: lazy(() => import('./components/incidents/IncidentDetail/IncidentTabs/Retrospective/RetrospectiveReport'))
+      },
+
     ]
   }
 ];

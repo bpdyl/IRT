@@ -100,7 +100,7 @@ class Incident(models.Model):
     severity = models.CharField(max_length=20, choices=SEVERITY_CHOICES)
     affected_users = models.ManyToManyField(AUTH_USER_MODEL, related_name='affected_incidents', blank=True)
     affected_systems = models.ManyToManyField('System', related_name='incidents', blank=True)
-    related_incidents = models.ManyToManyField('self', blank=True)
+    related_incidents = models.ManyToManyField('self', blank=True,symmetrical=False)
     playbook = models.ForeignKey(Playbook, on_delete=models.SET_NULL, null=True, blank=True, related_name='incidents')
     teams = models.ManyToManyField('Team', related_name='incidents', blank=True)
     mitigation_description = models.TextField(null=True, blank=True)

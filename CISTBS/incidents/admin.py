@@ -1,5 +1,19 @@
 from django.contrib import admin
-from .models import (Incident, IncidentType,System, Playbook,Task,Team,IncidentRole,IncidentAssignment,TimelineEvent, TimelineComment)
+from .models import (
+    Incident,
+    IncidentType,
+    System,
+    Playbook,
+    Task,
+    Team,
+    IncidentRole,
+    IncidentAssignment,
+    TimelineEvent,
+    TimelineComment,
+    Retrospective,
+    RetrospectiveTemplate
+)
+
 # Register your models here.
 
 admin.site.register(Incident)
@@ -12,7 +26,8 @@ admin.site.register(IncidentRole)
 admin.site.register(IncidentAssignment)
 admin.site.register(TimelineEvent)
 admin.site.register(TimelineComment)
-
+admin.site.register(Retrospective)
+admin.site.register(RetrospectiveTemplate)
 
 
 from django.contrib import admin
@@ -25,19 +40,64 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ('email','first_name','last_name', 'is_staff', 'is_active','is_superuser','_id',)
-    list_filter = ('email', 'is_staff', 'is_active','is_superuser',)
-    fieldsets = (
-        (None, {'fields': ('first_name','last_name','email','username','password',)}),
-        ('Permissions', {'fields': ('is_staff', 'is_active',)}),
+    list_display = (
+        "email",
+        "first_name",
+        "last_name",
+        "is_staff",
+        "is_active",
+        "is_superuser",
+        "_id",
     )
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('first_name','last_name','email','username','password1', 'password2','is_staff', 'is_active',)}
+    list_filter = (
+        "email",
+        "is_staff",
+        "is_active",
+        "is_superuser",
+    )
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "username",
+                    "password",
+                )
+            },
+        ),
+        (
+            "Permissions",
+            {
+                "fields": (
+                    "is_staff",
+                    "is_active",
+                )
+            },
         ),
     )
-    search_fields = ('email','username','first_name','last_name')
-    ordering = ('email','username','first_name','last_name')
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "username",
+                    "password1",
+                    "password2",
+                    "is_staff",
+                    "is_active",
+                ),
+            },
+        ),
+    )
+    search_fields = ("email", "username", "first_name", "last_name")
+    ordering = ("email", "username", "first_name", "last_name")
+
 
 admin.site.register(CustomUser, CustomUserAdmin)

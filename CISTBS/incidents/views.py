@@ -23,6 +23,7 @@ from .models import (
     IncidentRole,
     IncidentType,
     IncidentAssignment,
+    RetrospectiveTemplate
 )
 from django.contrib.auth.models import User
 from .serializers import (
@@ -39,6 +40,7 @@ from .serializers import (
     FollowUpSerializer,
     IncidentTypeSerializer,
     RetrospectiveSerializer,
+    RetrospectiveTemplateSerializer
 )
 
 
@@ -226,6 +228,33 @@ class RetrospectiveDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         serializer.save()
+
+class RetrospectiveTemplateListCreateView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
+    def get(self, request):
+        templates = RetrospectiveTemplate.objects.all()
+        serializer = RetrospectiveTemplateSerializer(templates, many=True)
+        return Response(serializer.data)
+
+class RetrospectiveTemplateDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
+    def get(self, request, pk):
+        print(f'Request made by : {request.user}')
+        template = get_object_or_404(RetrospectiveTemplate, pk=pk)
+        serializer = RetrospectiveTemplateSerializer(template)
+        return Response(serializer.data)
+
+    def post(self, request, pk):
+        playbook = get_object_or_404(Playbook, pk=pk)
+        content = request.data.get('content', '')
+        print(f'New content : {content}')
+        if content:
+            playbook.content = content
+            playbook.save()
+            return Response({"message": "Playbook updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"error": "Content is required"}, status=status.HTTP_400_BAD_REQUEST)
 
 class IndexView(TemplateView):
     template_name = 'index.html'

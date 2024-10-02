@@ -1,6 +1,6 @@
 # signals.py
 
-from django.db.models.signals import pre_save, post_save, post_delete, m2m_changed
+from django.db.models.signals import pre_save, post_save, post_delete, m2m_changed, pre_delete
 from django.dispatch import receiver
 from django.db import models
 from django.utils import timezone
@@ -24,12 +24,10 @@ from django.utils.deprecation import MiddlewareMixin
 import threading
 _thread_locals = threading.local()
 
-# def get_current_user():
-#     return getattr(_thread_locals, 'user', None)
-
-# class CurrentUserMiddleware(MiddlewareMixin):
-#     def process_request(self, request):
-#         _thread_locals.user = request.user
+def get_deleted_incidents():
+    if not hasattr(_thread_locals, 'deleted_incidents'):
+        _thread_locals.deleted_incidents = set()
+    return _thread_locals.deleted_incidents
 
 from backend.authentication import get_current_user
 
@@ -91,16 +89,27 @@ def incident_post_save(sender, instance, created, **kwargs):
                     event_type='incident_updated',
                 )
 
-# Handle incident deletion
+
+@receiver(pre_delete, sender=Incident)
+def incident_pre_delete(sender, instance, **kwargs):
+    deleted_incidents = get_deleted_incidents()
+    deleted_incidents.add(instance.pk)
+
+
 @receiver(post_delete, sender=Incident)
 def incident_post_delete(sender, instance, **kwargs):
-    user = get_current_user()
-    TimelineEvent.objects.create(
-        incident=instance,
-        author=user,
-        message=f"Incident '{instance.title}' was deleted.",
-        event_type='incident_deleted',
-    )
+    deleted_incidents = get_deleted_incidents()
+    deleted_incidents.discard(instance.pk)
+# # Handle incident deletion
+# @receiver(post_delete, sender=Incident)
+# def incident_post_delete(sender, instance, **kwargs):
+#     user = get_current_user()
+#     TimelineEvent.objects.create(
+#         incident=instance,
+#         author=user,
+#         message=f"Incident '{instance.title}' was deleted.",
+#         event_type='incident_deleted',
+#     )
 
 # IncidentAssignment signals
 @receiver(post_save, sender=IncidentAssignment)
@@ -118,16 +127,26 @@ def assignment_post_save(sender, instance, created, **kwargs):
         # Handle updates if necessary
         pass
 
+# Update IncidentAssignment post_delete signal
 @receiver(post_delete, sender=IncidentAssignment)
 def assignment_post_delete(sender, instance, **kwargs):
-    user = get_current_user()
-    message = f"{instance.user.get_full_name()} has been removed from role {instance.role.name}"
-    TimelineEvent.objects.create(
-        incident=instance.incident,
-        author=user,
-        message=message,
-        event_type='role_removed',
-    )
+    deleted_incidents = get_deleted_incidents()
+    incident_id = instance.incident_id
+    if incident_id in deleted_incidents:
+        # The incident is being deleted; skip creating TimelineEvent
+        return
+    else:
+        # Proceed to create TimelineEvent
+        user = get_current_user()
+        if not user or not user.is_authenticated:
+            user = None
+        message = f"{instance.user.get_full_name()} has been removed from role {instance.role.name}"
+        TimelineEvent.objects.create(
+            incident_id=incident_id,
+            author=user,
+            message=message,
+            event_type='role_removed',
+        )
 
 # Task signals
 @receiver(pre_save, sender=Task)
@@ -163,16 +182,24 @@ def task_post_save(sender, instance, created, **kwargs):
                     event_type='task_updated',
                 )
 
+# Update Task post_delete signal
 @receiver(post_delete, sender=Task)
 def task_post_delete(sender, instance, **kwargs):
-    user = get_current_user()
-    message = f"Task '{instance.title}' has been deleted."
-    TimelineEvent.objects.create(
-        incident=instance.incident,
-        author=user,
-        message=message,
-        event_type='task_deleted',
-    )
+    deleted_incidents = get_deleted_incidents()
+    incident_id = instance.incident_id
+    if incident_id in deleted_incidents:
+        return
+    else:
+        user = get_current_user()
+        if not user or not user.is_authenticated:
+            user = None
+        message = f"Task '{instance.title}' has been deleted."
+        TimelineEvent.objects.create(
+            incident_id=incident_id,
+            author=user,
+            message=message,
+            event_type='task_deleted',
+        )
 
 # FollowUp signals
 @receiver(pre_save, sender=FollowUp)
@@ -209,14 +236,21 @@ def followup_post_save(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=FollowUp)
 def followup_post_delete(sender, instance, **kwargs):
-    user = get_current_user()
-    message = f"Follow-up '{instance.title}' has been deleted."
-    TimelineEvent.objects.create(
-        incident=instance.incident,
-        author=user,
-        message=message,
-        event_type='followup_deleted',
-    )
+    deleted_incidents = get_deleted_incidents()
+    incident_id = instance.incident_id
+    if incident_id in deleted_incidents:
+        return
+    else:
+        user = get_current_user()
+        if not user or not user.is_authenticated:
+            user = None
+        message = f"Follow-up '{instance.title}' has been deleted."
+        TimelineEvent.objects.create(
+            incident_id=incident_id,
+            author=user,
+            message=message,
+            event_type='followup_deleted',
+        )
 
 # Retrospective signals
 @receiver(pre_save, sender=Retrospective)
@@ -262,14 +296,22 @@ def retrospective_post_save(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Retrospective)
 def retrospective_post_delete(sender, instance, **kwargs):
-    user = get_current_user()
-    message = f"Retrospective for incident '{instance.incident.title}' has been deleted."
-    TimelineEvent.objects.create(
-        incident=instance.incident,
-        author=user,
-        message=message,
-        event_type='retrospective_deleted',
-    )
+    deleted_incidents = get_deleted_incidents()
+    incident_id = instance.incident_id
+    if incident_id in deleted_incidents:
+        return
+    else:
+        user = get_current_user()
+        if not user or not user.is_authenticated:
+            user = None
+        message = f"Retrospective for incident '{instance.incident.title}' has been deleted."
+        TimelineEvent.objects.create(
+            incident_id=incident_id,
+            author=user,
+            message=message,
+            event_type='retrospective_deleted',
+        )
+
 
 # Team m2m_changed signals
 @receiver(m2m_changed, sender=Incident.teams.through)

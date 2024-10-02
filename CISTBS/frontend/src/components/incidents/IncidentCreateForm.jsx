@@ -155,11 +155,14 @@ const IncidentCreateForm = ({ onClose }) => {
           severity: severity ? severity.value : null,  // Extract value
           incident_type: incidentType ? incidentType.value : null,  // Extract value
           deadlineDate,
-          teams: selectedTeams.map(team => team.value),  // Send team IDs
+          team_ids: selectedTeams.map(team => team.value),  // Send team IDs
           assignments: assignments.map((assignment) => ({
             user: assignment.user ? assignment.user.value : null,
             role: assignment.role ? assignment.role.value : null,
-        })),
+            })),
+          //pass current time as start time
+          start_datetime: new Date().toISOString(),
+          reported_date: new Date().toISOString(),
         };
 
         console.log('New Incident:', newIncident);

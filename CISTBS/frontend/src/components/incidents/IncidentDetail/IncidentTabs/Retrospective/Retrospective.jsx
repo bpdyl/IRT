@@ -14,14 +14,13 @@ import {
   faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import EditDataModal from './EditDataModal';
+import EditRetrospectiveModal from './EditRetrospectiveModal';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  fetchIncident,
   updateIncident,
-  fetchRetrospective,
   updateRetrospective,
 } from '../../../../../redux/reducer/incidentSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Retrospective = ({ incidentId }) => {
   const dispatch = useDispatch();
@@ -51,6 +50,8 @@ const Retrospective = ({ incidentId }) => {
   // Refs for dropdowns
   const ownerDropdownRef = useRef(null);
   const dueDateInputRef = useRef(null);
+
+  const navigate = useNavigate();
 
   // Steps state
   const [steps, setSteps] = useState([
@@ -139,15 +140,38 @@ const Retrospective = ({ incidentId }) => {
 
   // State for EditDataModal
   const [isEditDataModalOpen, setIsEditDataModalOpen] = useState(false);
-
+  const [isEditRetroModalOpen, setIsEditRetroModalOpen] = useState(false);
+  
   const handleEditStep = (stepId, editLabel) => {
     if (stepId === 1) {
       setIsEditDataModalOpen(true);
-    } else {
+    } else if (stepId === 2) {
+      setIsEditRetroModalOpen(true);
+    }
+    else if (stepId === 3) {
+      handlePublish();
+    }
+    else {
       alert(`${editLabel} for step ${stepId}`);
     }
   };
 
+  const handlePublish = async () => {
+    try {
+      // Update the retrospective status to 'Published'
+      await dispatch(
+        updateRetrospective({
+          incidentId,
+          data: { status: 'Published' },
+        })
+      ).unwrap();
+  
+      // Redirect to the report page
+      navigate(`/incidents/${incidentId}/retrospective/report`);
+    } catch (error) {
+      console.error('Failed to publish retrospective:', error);
+    }
+  };
   const handleSaveEditData = async ({ incidentData, retrospectiveData }) => {
     try {
       // Update incident data
@@ -171,6 +195,23 @@ const Retrospective = ({ incidentId }) => {
       );
     } catch (error) {
       console.error('Failed to update incident data:', error);
+    }
+  };
+
+  const handleSaveEditRetrospective = async ({ content, templateId }) => {
+    try {
+      // Update the Retrospective content and template
+      await dispatch(
+        updateRetrospective({
+          incidentId: incidentId,
+          data: { content, template: templateId },
+        })
+      ).unwrap();
+
+      // Close the modal
+      setIsEditRetroModalOpen(false);
+    } catch (error) {
+      console.error('Failed to update retrospective:', error);
     }
   };
 
@@ -285,27 +326,6 @@ const Retrospective = ({ incidentId }) => {
                 </div>
               </div>
             </div>
-            <div className="progress-bar">
-              <span>
-                {
-                  steps.filter((step) => step.status === 'Completed').length
-                }
-                /{steps.length} steps completed
-              </span>
-              <div className="progress">
-                <div
-                  className="progress-completed"
-                  style={{
-                    width: `${
-                      (steps.filter((step) => step.status === 'Completed')
-                        .length /
-                        steps.length) *
-                      100
-                    }%`,
-                  }}
-                ></div>
-              </div>
-            </div>
           </div>
 
           <div className="retrospective-steps">
@@ -314,51 +334,7 @@ const Retrospective = ({ incidentId }) => {
                 <div
                   className="step-header"
                   onClick={() => toggleStepDetails(step.id)}
-                >
-                  {/* Status Icon Dropdown */}
-                  <div
-                    className="status-dropdown"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <button
-                      type="button"
-                      className="status-button"
-                      onClick={(e) => toggleStepStatusDropdown(e, step.id)}
-                    >
-                      <FontAwesomeIcon
-                        icon={statusIconMap[step.status]}
-                        className="status-icon"
-                        spin={step.status === 'In progress'}
-                      />
-                      <span>{step.status}</span>
-                      <FontAwesomeIcon
-                        icon={faChevronDown}
-                        className="chevron-icon"
-                      />
-                    </button>
-                    {/* Status Dropdown Menu */}
-                    {step.isStatusDropdownOpen && (
-                      <div className="dropdown-menu">
-                        {['To do', 'In progress', 'Completed'].map((status) => (
-                          <div
-                            key={status}
-                            className="dropdown-item"
-                            onClick={(e) =>
-                              handleStatusChange(e, step.id, status)
-                            }
-                          >
-                            <FontAwesomeIcon
-                              icon={statusIconMap[status]}
-                              className="dropdown-icon"
-                              spin={status === 'In progress'}
-                            />
-                            <span>{status}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
+                >                  
                   {/* Step Name */}
                   <div className="step-name">{step.name}</div>
 
@@ -392,6 +368,14 @@ const Retrospective = ({ incidentId }) => {
             onSave={handleSaveEditData}
             initialData={incident ? incident : {}}
             retrospectiveData={retrospective ? retrospective : {}}
+          />
+          {/* Edit Retrospective Modal */}
+          <EditRetrospectiveModal
+            isOpen={isEditRetroModalOpen}
+            onClose={() => setIsEditRetroModalOpen(false)}
+            onSave={handleSaveEditRetrospective}
+            initialContent={retrospective?.content || ''}
+            initialTemplateId={retrospective?.template || null}
           />
         </>
       ) : (

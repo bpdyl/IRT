@@ -1,0 +1,160 @@
+// RetrospectiveReport.scss
+
+.retrospective-report {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  
+    .report-title {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+  
+    section {
+      margin-bottom: 40px;
+    }
+  
+    h2 {
+      color: #34495e;
+      border-bottom: 2px solid #ecf0f1;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+  
+    .incident-details {
+      .details-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+  
+        div {
+          flex: 1 1 45%;
+          margin-bottom: 10px;
+  
+          strong {
+            color: #2c3e50;
+          }
+        }
+      }
+    }
+  
+    .retrospective-content {
+      .content {
+        line-height: 1.6;
+        color: #2c3e50;
+  
+        h1,
+        h2,
+        h3,
+        h4 {
+          color: #2c3e50;
+          margin-top: 20px;
+        }
+  
+        p {
+          margin-bottom: 15px;
+        }
+  
+        ul,
+        ol {
+          margin-left: 20px;
+          margin-bottom: 15px;
+  
+          li {
+            margin-bottom: 5px;
+          }
+        }
+  
+        code,
+        pre {
+          background-color: #f5f5f5;
+          padding: 10px;
+          display: block;
+          margin-bottom: 15px;
+          overflow-x: auto;
+        }
+  
+        hr {
+          border: none;
+          border-top: 1px solid #ecf0f1;
+          margin: 30px 0;
+        }
+      }
+    }
+  
+    .timeline-section {
+      // Remove any specific height or overflow styles from the Timeline component
+      .timeline-container {
+        max-height: none;
+        overflow: visible;
+      }
+  
+      // Additional styling for the timeline events if needed
+      .timeline-event {
+        padding: 15px;
+        border-bottom: 1px solid #ecf0f1;
+  
+        .event-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+  
+          .author {
+            font-weight: bold;
+            color: #2c3e50;
+          }
+  
+          .timestamp {
+            font-size: 0.9em;
+            color: #7f8c8d;
+          }
+        }
+  
+        .event-message {
+          margin-top: 10px;
+          color: #34495e;
+        }
+  
+        .comment-section,
+        .conversation-thread {
+          margin-top: 15px;
+          padding-left: 20px;
+          border-left: 2px solid #ecf0f1;
+  
+          .conversation-comment {
+            margin-bottom: 15px;
+          }
+        }
+      }
+    }
+  }
+  
+  .download-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .download-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .download-button:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Ensure the report content is printed correctly */
+  @media print {
+    .download-button-container {
+      display: none;
+    }
+  }

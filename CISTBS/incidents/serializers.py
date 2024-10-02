@@ -1,5 +1,19 @@
 from rest_framework import serializers
-from .models import Incident,Playbook,CustomUser,Task,TimelineEvent,TimelineComment,Team,IncidentRole,IncidentAssignment,FollowUp,Retrospective,IncidentType
+from .models import (
+    Incident,
+    Playbook,
+    CustomUser,
+    Task,
+    TimelineEvent,
+    TimelineComment,
+    Team,
+    IncidentRole,
+    IncidentAssignment,
+    FollowUp,
+    Retrospective,
+    IncidentType,
+    RetrospectiveTemplate
+)
 import requests
 from django.conf import settings
 import jwt
@@ -215,6 +229,11 @@ class PlaybookSerializer(serializers.ModelSerializer):
 class RetrospectiveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Retrospective
+        fields = '__all__'
+
+class RetrospectiveTemplateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RetrospectiveTemplate
         fields = '__all__'
 
 class AuthTokenSerializer(serializers.Serializer):

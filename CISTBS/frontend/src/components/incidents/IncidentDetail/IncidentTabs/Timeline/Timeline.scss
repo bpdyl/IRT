@@ -43,9 +43,16 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    max-height: 300px;  /* Max height for the scrollable section */
-    overflow-y: auto;   /* Enable vertical scrolling */
     padding-right: 10px; /* To avoid content hiding under scrollbar */
+    &.scroll-enabled {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+  
+    &.scroll-disabled {
+      max-height: none;
+      overflow: visible;
+    }
   }
   
   /* Vertical line connecting events */

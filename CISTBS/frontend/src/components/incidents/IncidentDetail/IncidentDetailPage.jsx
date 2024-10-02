@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Spinner, Alert } from 'react-bootstrap';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';  // Import hooks from react-router-dom
-import { fetchIncident } from '../../../redux/reducer/incidentSlice';
+import { fetchIncident, fetchRetrospective } from '../../../redux/reducer/incidentSlice';
 import { useIncidentService } from '../../../services/incidentService';
 import IncidentHeader from './IncidentHeader/IncidentHeader';
 import IncidentTabs from './IncidentTabs/IncidentTabs';
@@ -31,6 +31,7 @@ const IncidentDetailPage = ({ incidentId: propIncidentId }) => {
     useEffect(() => {
         if (incidentId) {
             dispatch(fetchIncident(incidentId));  // Dispatch Redux action to fetch the incident
+            dispatch(fetchRetrospective(incidentId));
         }
 
     }, [incidentId, dispatch]);
