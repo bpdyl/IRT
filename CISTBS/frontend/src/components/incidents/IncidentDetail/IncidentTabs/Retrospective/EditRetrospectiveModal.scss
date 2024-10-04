@@ -1,0 +1,52 @@
+/* EditRetrospectiveModal.scss */
+
+.edit-retrospective-modal {
+    .form-group {
+      margin-bottom: 16px;
+  
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+  
+      .form-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #E5E7EB;
+        border-radius: 6px;
+        font-size: 16px;
+      }
+  
+      .rich-text-editor {
+        .ql-toolbar {
+          border-radius: 6px 6px 0 0;
+        }
+        .ql-container {
+          border-radius: 0 0 6px 6px;
+          min-height: 200px;
+        }
+      }
+    }
+  
+    .save-button {
+      background-color: #7748F6;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  
+    .cancel-button {
+      background-color: transparent;
+      color: #6B7280;
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  }
+  

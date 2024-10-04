@@ -20,6 +20,14 @@ const menuItems = {
           icon: 'feather icon-file-text',
           url: '/playbooks'
         },
+        {
+          id: 'incidents',
+          title: 'incidents',
+          type: 'item',
+          icon: 'feather icon-file-text',
+          url: '/incidents'
+        },
+        
       ]
     },
     // {

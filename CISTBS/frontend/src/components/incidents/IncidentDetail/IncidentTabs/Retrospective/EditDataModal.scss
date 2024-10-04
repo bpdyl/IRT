@@ -1,0 +1,175 @@
+/* EditDataModal.scss */
+
+.modal-body .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .modal-body label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  
+  .modal-body .form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+  }
+  
+  .modal-body .form-input:focus {
+    border-color: #7748F6;
+    outline: none;
+  }
+  
+  .required {
+    color: red;
+  }
+  
+  .cancel-button,
+  .save-button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+  }
+  
+  .cancel-button {
+    background-color: transparent;
+    color: #787476;
+    border: 1px solid #E5E7EB;
+  }
+  
+  .cancel-button:hover {
+    background-color: #E5E7EB;
+  }
+  
+  .save-button {
+    background-color: #7748F6;
+    color: white;
+  }
+  
+  .save-button:hover {
+    background-color: #6538D1;
+  }
+  
+  .date-picker-group {
+    position: relative;
+  }
+  
+  .date-input {
+    cursor: pointer;
+  }
+  
+  .date-input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  
+  .date-picker-group::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-top-color: #6d6d80;
+  }
+  
+  .date-picker-group:hover .form-input {
+    border-color: #7748F6;
+  }
+  
+  .date-picker-group:active .form-input {
+    border-color: #7748F6;
+  }
+  
+  .custom-multi-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 6px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    cursor: pointer;
+  
+    &:focus-within {
+      border-color: #7748F6;
+    }
+  }
+  
+  .selected-items {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 1;
+  }
+  
+  .chip {
+    display: flex;
+    align-items: center;
+    background-color: #E5E7EB;
+    border-radius: 16px;
+    padding: 4px 8px;
+    margin: 2px;
+    font-size: 14px;
+  }
+  
+  .remove-icon {
+    margin-left: 4px;
+    cursor: pointer;
+  }
+  
+  .input-field {
+    border: none;
+    outline: none;
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  .dropdown-icon {
+    margin-left: auto;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    z-index: 1;
+  }
+  
+  .dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: #F3F4F6;
+    }
+  }
+
+  .react-select__control {
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    min-height: 38px;
+  }
+  
+  .react-select__multi-value {
+    .css-1p3m7a8-multiValue{
+        background-color: #E5E7EB;
+        border-radius: 10px;
+        padding: 4px 8px;
+        margin: 2px;
+    }
+
+  }
+
+  

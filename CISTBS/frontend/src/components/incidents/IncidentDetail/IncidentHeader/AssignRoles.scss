@@ -1,0 +1,148 @@
+/* General popup styles */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    width: 450px;
+    padding: 30px;
+    animation: fadeIn 0.3s ease-in-out;
+    transition: all 0.3s ease;
+}
+
+/* Inner container */
+.popup-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Headline styling */
+.popup-inner h2 {
+    color: #5f27cd;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Assignment row styles */
+.assignment-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Input and select field styling */
+.assignment-row input,
+.assignment-row select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.assignment-row input:focus,
+.assignment-row select:focus {
+    border-color: #5f27cd;
+    box-shadow: 0 0 8px rgba(95, 39, 205, 0.2);
+    outline: none;
+}
+
+/* Remove button styling */
+.remove-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Move it below the assignment row */
+}
+
+.remove-btn:hover {
+    background-color: #ee5253;
+}
+
+/* Add Assignment button */
+.add-btn {
+    background-color: #1dd1a1;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-btn:hover {
+    background-color: #10ac84;
+}
+
+/* Close button styling */
+.close-btn {
+    background-color: #576574;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: #2f3640;
+}
+
+/* Input fields hover effect */
+.assignment-row input:hover,
+.assignment-row select:hover {
+    border-color: #5f27cd;
+}
+
+/* Fade-in animation for popup */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 500px) {
+    .popup {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+.assignment-row {
+    display: flex;
+    flex-direction: column; /* Change to column to stack items vertically */
+    margin-bottom: 15px; /* Add space between rows */
+}
+
+.assignment-row input,
+.assignment-row select {
+    margin-bottom: 5px; /* Space between input/select and the button */
+}
+
+.remove-btn {
+    margin-top: 5px; /* Optional, for additional spacing above the button */
+}

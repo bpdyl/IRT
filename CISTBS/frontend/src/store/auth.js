@@ -12,6 +12,8 @@ export const refreshToken = async () => {
     return response.data.access;
   } catch (error) {
     console.error("Error refreshing token", error);
+    // Refresh token is invalid or expired, redirect to login
+    window.location.href = '/login'; // Adjust the path as needed
     return null;
   }
 };

@@ -1,0 +1,67 @@
+.incident-detail-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+
+    .incident-detail-body {
+        margin-top: 20px;
+    }
+
+    .incident-detail-content {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 20px;
+    }
+    .style-0 {
+        padding-left: 40px;
+        padding-right: 40px;
+        box-sizing: border-box;
+        border-width: 0px;
+        border-style: solid;
+        border-color: rgb(229, 231, 235);
+    }
+
+    .style-1 {
+        justify-content: center;
+        max-width: 1280px;
+        width: 100%;
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+        border-width: 0px;
+        border-style: solid;
+        border-color: rgb(229, 231, 235);
+    }
+
+    .style-2 {
+        flex-grow: 1;
+        width: 100%;
+        margin-top: 32px;
+        box-sizing: border-box;
+        border-width: 0px;
+        border-style: solid;
+        border-color: rgb(229, 231, 235);
+    }
+
+    .style-3 {
+        display: flex;
+        background-color: rgb(255, 255, 255);
+        column-gap: 20px;
+        width: 100%;
+        min-height: 100%;
+        margin-top: 20px;
+        box-sizing: border-box;
+        border-width: 0px;
+        border-style: solid;
+        border-color: rgb(229, 231, 235);
+    }
+
+    .style-4 {
+        width: 75%;
+        box-sizing: border-box;
+        border-width: 0px;
+        border-style: solid;
+        border-color: rgb(229, 231, 235);
+    }
+}
+

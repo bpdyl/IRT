@@ -8,6 +8,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ConfigProvider } from './contexts/ConfigContext';
 import { Auth0ProviderWithNavigate } from './store/Auth0ProviderWithNavigate';
+import { Provider as ReduxProvider } from 'react-redux'; // <-- Import Redux Provider
+import store from './redux/store/store'; // <-- Import Redux store
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'leaflet/dist/leaflet.css';
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 const container = document.getElementById('root');
@@ -15,6 +20,7 @@ const root = createRoot(container);
 
 
 root.render(
+<ReduxProvider store={store}>  {/* <-- Add Redux Provider here */}
   <BrowserRouter>
     <Auth0ProviderWithNavigate>
       <ConfigProvider>
@@ -22,6 +28,7 @@ root.render(
       </ConfigProvider>
     </Auth0ProviderWithNavigate>
   </BrowserRouter>
+</ReduxProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

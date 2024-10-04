@@ -1,0 +1,265 @@
+/* General Styles */
+.retrospective-container {
+  padding: 24px;
+  background-color: #fff;
+  border: 1px solid #e6e4e1;
+  border-radius: 6px;
+}
+
+.retrospective-header {
+  padding-bottom: 24px;
+}
+
+.retrospective-meta {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.section-label {
+  font-size: 12px;
+  color: #6d6d80;
+  margin-bottom: 4px;
+}
+
+/* Due Date Styles */
+.due-date-container,
+.assign-owner-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.due-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1e1a33;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  svg {
+    font-size: 16px;
+  }
+
+  &:hover {
+    background-color: #f0f0f5;
+    color: #3b8552;
+    border-color: #c6c6d1;
+  }
+
+  .due-date-input {
+    border: none;
+    background-color: transparent;
+    font-size: 13px;
+    color: inherit;
+    cursor: pointer;
+    outline: none;
+    pointer-events: none;
+
+    &::-webkit-calendar-picker-indicator {
+      opacity: 0;
+    }
+  }
+}
+
+/* Assign Owner Styles */
+.assign-owner {
+  position: relative;
+}
+
+.assign-owner-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1e1a33;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+  svg {
+    font-size: 16px;
+  }
+
+  &:hover {
+    background-color: #f0f0f5;
+    color: #3b8552;
+    border-color: #c6c6d1;
+  }
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #e6e4e1;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  padding: 4px;
+  margin-top: 4px;
+  width: max-content;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #1e1a33;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f0f0f5;
+  }
+}
+
+/* Dropdown Menu Styles */
+.step-status-dropdown-menu {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #e6e4e1;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  padding: 4px;
+  margin-top: 4px;
+  width: max-content;
+}
+
+.step-status-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #1e1a33;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f0f0f5;
+  }
+}
+
+
+/* Progress Bar Styles */
+.progress-bar {
+  margin-top: 16px;
+}
+
+.progress {
+  width: 100%;
+  height: 8px;
+  background-color: #e6e4e1;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.progress-completed {
+  height: 8px;
+  background-color: #3b8552;
+  border-radius: 4px;
+}
+
+/* Steps Styles */
+.retrospective-steps {
+  margin-top: 24px;
+}
+
+.step {
+  border: 1px solid #e6e4e1;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.status-dropdown {
+  position: relative;
+}
+
+.status-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid #e6e4e1;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e1a33;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background-color: #f0f0f5;
+    border-color: #c6c6d1;
+  }
+
+  .status-icon {
+    font-size: 16px;
+    color: #3b8552;
+  }
+
+  .chevron-icon {
+    font-size: 12px;
+    color: #6d6d80;
+  }
+}
+
+.step-name {
+  flex-grow: 1;
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 16px;
+}
+
+.expand-icon {
+  font-size: 16px;
+  color: #6d6d80;
+  cursor: pointer;
+}
+
+.step-details {
+  padding: 16px;
+  background-color: #f9f9fb;
+  border-top: 1px solid #e6e4e1;
+}
+
+.edit-data-button {
+  background-color: #7748f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 16px;
+
+  &:hover {
+    background-color: #6538d1;
+  }
+}
+
+  

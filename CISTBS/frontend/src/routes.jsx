@@ -68,7 +68,22 @@ const routes = [
         path: '/playbooks/:playbookId',
         element: lazy(() => import('./playbooks/playbookDetail'))
       },
-      
+      {
+        exact: 'true',
+        path: '/Incidents',
+        element: lazy(() => import('./components/incidents/incidents'))
+      },
+      {
+        exact: 'true',
+        path: '/incidents/:incidentId',
+        element: lazy(() => import('./components/incidents/IncidentDetail/IncidentDetailPage'))
+      },
+      {
+        exact: 'true',
+        path: '/incidents/:incidentId/retrospective/report',
+        element: lazy(() => import('./components/incidents/IncidentDetail/IncidentTabs/Retrospective/RetrospectiveReport'))
+      },
+
     ]
   }
 ];

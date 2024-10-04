@@ -1,0 +1,442 @@
+// /* General Incident Container */
+// .incident-dashboard {
+//   padding: 20px;
+//   background-color: #f9f9f9;
+//   font-family: Arial, sans-serif;
+// }
+
+// .incident-header {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 20px;
+// }
+
+// .report-button {
+//   padding: 12px 20px;
+//   background-color: #6200ea;
+//   color: white;
+//   border: none;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   font-weight: bold;
+// }
+
+// .report-button:hover {
+//   background-color: #4b00b5;
+// }
+
+// .section {
+//   margin-bottom: 20px;
+// }
+
+// .section-header {
+//   font-weight: bold;
+//   font-size: 18px;
+//   padding: 10px;
+//   background-color: #fff;
+//   border-bottom: 1px solid #e1e1e1;
+//   display: flex;
+//   justify-content: space-between;
+//   cursor: pointer;
+//   border-radius: 5px;
+// }
+
+// .section-title {
+//   color: #444;
+// }
+
+// .incident-count {
+//   color: #888;
+// }
+
+// .section-content {
+//   padding: 15px;
+//   background-color: white;
+//   border-radius: 5px;
+//   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+// }
+
+// .incident {
+//   padding: 15px;
+//   border: 1px solid #e1e1e1;
+//   border-radius: 8px;
+//   margin-bottom: 10px;
+//   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+// }
+
+// .incident-header {
+//   display: flex;
+//   justify-content: space-between;
+// }
+
+// .incident-title {
+//   font-size: 16px;
+//   font-weight: bold;
+// }
+
+// .incident-details {
+//   font-size: 13px;
+//   color: #888;
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// /* Severity-specific styling */
+// .severity-pill.low {
+//   background-color: #4caf50; /* Green for Low */
+// }
+
+// .severity-pill.medium {
+//   background-color: #ffeb3b; /* Yellow for Medium */
+// }
+
+// .severity-pill.high {
+//   background-color: #ff9800; /* Orange for High */
+// }
+
+// .severity-pill.critical {
+//   background-color: #f44336; /* Red for Critical */
+// }
+
+// /* General incident styling */
+// .incident-description {
+//   margin-top: 5px;
+//   color: #555;
+//   font-size: 14px;
+// }
+
+// /* Keep the rest of your styling */
+// .incident {
+//   padding: 15px;
+//   border: 1px solid #e1e1e1;
+//   border-radius: 8px;
+//   margin-bottom: 10px;
+//   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+// }
+
+// .incident-header {
+//   display: flex;
+//   justify-content: space-between;
+// }
+
+// .incident-details {
+//   font-size: 13px;
+//   color: #888;
+//   display: flex;
+//   flex-direction: column;
+// }
+
+
+// .incident-footer {
+//   margin-top: 10px;
+//   display: flex;
+//   justify-content: space-between;
+// }
+
+// .incident-roles {
+//   display: flex;
+//   align-items: center;
+// }
+
+// .role-badges {
+//   display: flex;
+//   margin-left: 10px;
+// }
+
+// .roles-badge {
+//   background-color: #ececec;
+//   padding: 5px;
+//   border-radius: 50%;
+//   width: 32px;
+//   height: 32px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   font-size: 12px;
+//   margin-left: 5px;
+//   font-weight: bold;
+//   color: #444;
+// }
+
+// .assign-roles-button {
+//   padding: 8px 15px;
+//   border-radius: 5px;
+//   background-color: #6200ea;
+//   color: white;
+//   font-weight: bold;
+//   cursor: pointer;
+//   border: none;
+// }
+
+// .assign-roles-button:hover {
+//   background-color: #4b00b5;
+// }
+
+// .modal {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// .modal-content {
+//   background-color: white;
+//   padding: 20px;
+//   border-radius: 10px;
+//   max-width: 600px;
+//   width: 100%;
+//   position: relative;
+// }
+
+// .close-button {
+//   position: absolute;
+//   top: 10px;
+//   right: 10px;
+//   font-size: 24px;
+//   cursor: pointer;
+// }
+
+/* General Incident Container */
+.incident-dashboard {
+  padding: 20px;
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Incident Header */
+.incident-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.incident-header h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+.report-button {
+  padding: 12px 20px;
+  background-color: #007bff; /* Blue */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.report-button:hover {
+  background-color: #0056b3; /* Darker Blue */
+}
+
+/* Section Styles */
+.section {
+  margin-bottom: 20px;
+}
+
+.section-header {
+  font-size: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e1e1e1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #333;
+}
+
+.section-title {
+  font-weight: bold;
+}
+
+.incident-count {
+  color: #555;
+}
+
+.toggle-icon {
+  font-size: 14px;
+  color: #888;
+}
+
+.section-content {
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+/* Incident Card Styles */
+.incident-card {
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  padding: 15px;
+}
+
+.incident-card:hover {
+  transform: translateY(-5px);
+}
+
+.incident-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.incident-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.incident-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.incident-card-body {
+  margin-top: 10px;
+}
+
+.incident-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.incident-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.detail-item {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Roles and Assignments */
+.incident-card-footer {
+  margin-top: 15px;
+  border-top: 1px solid #e1e1e1;
+  padding-top: 10px;
+}
+
+.assigned-roles {
+  display: flex;
+  align-items: center;
+}
+
+.roles-count {
+  font-size: 14px;
+  color: #555;
+  margin-right: 10px;
+}
+
+.role-badges {
+  display: flex;
+}
+
+.role-badge {
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: -8px;
+  border: 2px solid white;
+}
+
+.no-roles {
+  font-size: 14px;
+  color: #888;
+}
+
+/* Modal Styles */
+.incident-create-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.incident-modal-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.modal-close-button:hover {
+  color: #000;
+}
+
+/* No Incidents Message */
+.no-incidents {
+  font-size: 14px;
+  color: #777;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Severity Badge Styles */
+.severity-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  text-transform: capitalize;
+}
+
+.severity-badge.low {
+  background-color: #26b5e5; /* Green */
+}
+
+.severity-badge.medium {
+  background-color: #de9424; /* Orange */
+}
+
+.severity-badge.high {
+  background-color: #f44336; /* Red */
+}
+
+.severity-badge.critical {
+  background-color: #b02e20; /* Purple */
+}
